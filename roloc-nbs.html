@@ -1,0 +1,387 @@
+<html>
+  <head>
+<style type="text/css">
+.knitr .inline {
+  background-color: #f7f7f7;
+  border:solid 1px #B0B0B0;
+}
+.error {
+	font-weight: bold;
+	color: #FF0000;
+}
+.warning {
+	font-weight: bold;
+}
+.message {
+	font-style: italic;
+}
+.source, .output, .warning, .error, .message {
+	padding: 0 1em;
+  border:solid 1px #F7F7F7;
+}
+.source {
+  background-color: #f5f5f5;
+}
+.rimage .left {
+  text-align: left;
+}
+.rimage .right {
+  text-align: right;
+}
+.rimage .center {
+  text-align: center;
+}
+.hl.num {
+  color: #AF0F91;
+}
+.hl.str {
+  color: #317ECC;
+}
+.hl.com {
+  color: #AD95AF;
+  font-style: italic;
+}
+.hl.opt {
+  color: #000000;
+}
+.hl.std {
+  color: #585858;
+}
+.hl.kwa {
+  color: #295F94;
+  font-weight: bold;
+}
+.hl.kwb {
+  color: #B05A65;
+}
+.hl.kwc {
+  color: #55aa55;
+}
+.hl.kwd {
+  color: #BC5A65;
+  font-weight: bold;
+}
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style type="text/css">
+    @media print {
+      body { }
+      p.img { text-align: center; page-break-inside: avoid }
+      img.CC { display: inline }
+    }
+    @media screen {
+      body { max-width: 800px; margin: auto }
+      p.img { text-align: center }
+      img.CC { display: inline }
+    }
+    p.date {
+      font-size: smaller;
+      margin: 0;
+    }
+    p.ref {
+      text-indent: -2em;
+      padding-left: 2em;
+    }
+  </style>
+  </head>
+  <body>
+    <h1>An ISCC-NBS Colour List for 'roloc'</h1>
+    <p>
+      <span style="font-style: italic">by Paul Murrell</span>
+      <a href="http://orcid.org">
+        <img alt="" src="https://www.stat.auckland.ac.nz/~paul/ORCID/ORCiD.png" style="width: 16px; height: 16px; vertical-align: middle">
+      </a>
+      <span style="font-family: mono; font-size: small">
+        <a href="http://orcid.org/0000-0002-3224-8858">http://orcid.org/0000-0002-3224-8858</a>
+      </span>
+    </p>
+    <p class="date">
+Friday 12 January 2018
+    </p>
+
+
+    <hr>
+    <p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img class="CC" alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png"></a><br><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">This document</span>
+    by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Paul
+    Murrell</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative
+    Commons Attribution 4.0 International License</a>.
+  </p>
+    <hr>
+    <!--
+  <p style="color: red">
+    FIXME: need to tag release 0.6 of roloc in git and push to github
+  </p>
+  <p style="color: red">
+    FIXME: need to create Docker image pmur002/dom-v0.6
+  </p>
+  <p style="color: red">
+    FIXME: once Docker image is ready, need to alter path to PhantomJS
+    and build using 'make docker'
+  </p>
+  <p style="color: red">
+    FIXME: once document is building with 'make docker', need to push
+    pmur002/dom-v0.6 to Docker Hub
+  </p>
+-->
+    <p>
+    This report describes the development of a ('roloc' package) colour list 
+    and colour metric
+    based on the ISCC-NBS System of Color Designation (CITE).
+  </p>
+    <div>
+      <h2>Table of Contents:</h2>
+      <ul style="list-style: none">
+        <li>
+          <a href="#intro">1. Introduction</a>
+        </li>
+        <li>
+          <a href="#summary">2. Discussion</a>
+        </li>
+        <li>
+          <a href="#summary">3. Summary</a>
+        </li>
+        <li>
+          <a href="#requirements">4. Technical requirements</a>
+        </li>
+        <li>
+          <a href="#Resources">5. Resources</a>
+        </li>
+        <li>
+          <a href="#references">6. References</a>
+        </li>
+      </ul>
+    </div>
+    <h2>
+      <a name="intro">1. Introduction</a>
+    </h2>
+    <p>
+    The 'roloc' package for R (CITE) was created to provide tools 
+    for transforming
+    inscrutable colour specifications into more recognisable colour names.
+    The <code>colourName()</code> function in the 'roloc' package
+    can take an R hexadecimal string colour specification, like 
+    <code>"#123456"</code> and produce a matching colour name.
+  </p>
+<div class="chunk" id="unnamed-chunk-3"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(roloc)</span>
+<span class="hl kwd">colourName</span><span class="hl std">(</span><span class="hl str">&quot;#123456&quot;</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">  [1] &quot;steelblue4&quot;
+</pre></div>
+</div></div>
+    <p>
+    However, the colour names that the <code>colourName</code> function
+    produces are not 
+    always easily comprehensible themselves.
+  </p>
+<div class="chunk" id="unnamed-chunk-4"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">cols</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">hcl</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">0</span><span class="hl std">,</span> <span class="hl num">120</span><span class="hl std">,</span> <span class="hl num">240</span><span class="hl std">),</span> <span class="hl num">80</span><span class="hl std">,</span> <span class="hl num">60</span><span class="hl std">)</span>
+<span class="hl std">cols</span>
+</pre></div>
+<div class="output"><pre class="knitr r">  [1] &quot;#E16A86&quot; &quot;#50A315&quot; &quot;#009ADE&quot;
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">colourName</span><span class="hl std">(cols)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">  [1] &quot;palevioletred2&quot; &quot;chartreuse4&quot;    &quot;steelblue2&quot;
+</pre></div>
+</div></div>
+    <p>
+    Fortunately, the <code>colourName</code> function allows us to
+    specify our own list of colour names <em>and</em> our own
+    colour metric for deciding which colour name matches a colour
+    specification.  For example, the <code>HTMLcolours</code>
+    colour list provides a much smaller set of colour names and
+    the <code>euclideanRGB</code> colour metric determine colour 
+    matches based on euclidean distance in the sRGB colour space
+    (rather than the default CIE Luv colour space).
+  </p>
+<div class="chunk" id="unnamed-chunk-5"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">colourName</span><span class="hl std">(cols,</span> <span class="hl kwc">colourList</span><span class="hl std">=HTMLcolours,</span> <span class="hl kwc">colourMetric</span><span class="hl std">=euclideanRGB)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">  [1] &quot;gray&quot;  &quot;olive&quot; &quot;teal&quot;
+</pre></div>
+</div></div>
+    <p>
+    While these colours are much easier to interpret, there is a 
+    danger of obtaining a misleading result.  For example, it is not clear that 
+    <code>"grey"</code> is a good description of a colour that
+    we previously identified as some sort of light red
+    (<code><code class="knitr inline">palevioletred2</code></code>).
+  </p>
+    <p>
+    What we need is a list of colours that is sufficiently large 
+    so as to provide a reasonable level of accuracy in describing colours,
+    but uses relatively plain descriptive colour names.
+  </p>
+    <p>
+    This document describes the development of a colour list and
+    colour metric based on the 
+    ISCC-NBS System of Color Designation.  
+  </p>
+<div class="chunk" id="unnamed-chunk-6"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(rolocISCCNBS)</span>
+</pre></div>
+</div></div>
+<div class="chunk" id="unnamed-chunk-7"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(pals)</span>
+<span class="hl kwd">colourName</span><span class="hl std">(</span><span class="hl kwd">stepped</span><span class="hl std">(),</span> <span class="hl kwc">colourList</span><span class="hl std">=ISCCNBScolours,</span> <span class="hl kwc">colourMetric</span><span class="hl std">=ISCCNBSblock)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">   [1] &quot;vivid red&quot;              &quot;moderate red&quot;           &quot;deep pink&quot;             
+   [4] &quot;pale purplish pink&quot;     &quot;strong yellowish brown&quot; &quot;dark orange yellow&quot;    
+   [7] &quot;light yellowish brown&quot;  &quot;pale orange yellow&quot;     &quot;strong yellow green&quot;   
+  [10] &quot;strong yellow green&quot;    &quot;light yellow green&quot;     &quot;light yellow green&quot;    
+  [13] &quot;moderate greenish blue&quot; &quot;light greenish blue&quot;    &quot;light greenish blue&quot;   
+  [16] &quot;very pale blue&quot;         &quot;vivid purplish blue&quot;    &quot;vivid violet&quot;          
+  [19] &quot;brilliant violet&quot;       &quot;very light violet&quot;      &quot;black&quot;                 
+  [22] &quot;dark gray&quot;              &quot;medium gray&quot;            &quot;light gray&quot;
+</pre></div>
+</div></div>
+    <p>
+    Slow first call because a list of 2^34 colour names gets loaded.
+  </p>
+<div class="chunk" id="unnamed-chunk-8"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl com">## ISCC-NBS colour names, but euclidean distance to block centroids</span>
+<span class="hl kwd">colourName</span><span class="hl std">(</span><span class="hl kwd">stepped</span><span class="hl std">(),</span> <span class="hl kwc">colourList</span><span class="hl std">=ISCCNBScolours)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">   [1] &quot;strong red&quot;               &quot;strong red&quot;               &quot;strong pink&quot;             
+   [4] &quot;light purplish pink&quot;      &quot;strong yellowish brown&quot;   &quot;dark orange yellow&quot;      
+   [7] &quot;light yellowish brown&quot;    &quot;pale yellowish pink&quot;      &quot;strong yellow green&quot;     
+  [10] &quot;strong yellow green&quot;      &quot;light yellow green&quot;       &quot;pale yellow green&quot;       
+  [13] &quot;vivid greenish blue&quot;      &quot;brilliant greenish blue&quot;  &quot;light greenish blue&quot;     
+  [16] &quot;very light greenish blue&quot; &quot;vivid purplish blue&quot;      &quot;vivid violet&quot;            
+  [19] &quot;brilliant violet&quot;         &quot;very light violet&quot;        &quot;dark grayish olive green&quot;
+  [22] &quot;dark gray&quot;                &quot;purplish gray&quot;            &quot;light purplish gray&quot;
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl com">## ISCC-NBS colour blocks, but non-ISCC-NBS colour list</span>
+<span class="hl kwd">colourName</span><span class="hl std">(</span><span class="hl kwd">stepped</span><span class="hl std">(),</span> <span class="hl kwc">colourMetric</span><span class="hl std">=ISCCNBSblock)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">   [1] &quot;firebrick3&quot;     &quot;indianred3&quot;     &quot;unknown&quot;        &quot;lavenderblush1&quot; &quot;orange4&quot;       
+   [6] &quot;unknown&quot;        &quot;burlywood3&quot;     &quot;navajowhite2&quot;   &quot;chartreuse4&quot;    &quot;chartreuse4&quot;   
+  [11] &quot;unknown&quot;        &quot;unknown&quot;        &quot;cadetblue4&quot;     &quot;cadetblue3&quot;     &quot;cadetblue3&quot;    
+  [16] &quot;slategray1&quot;     &quot;royalblue3&quot;     &quot;purple3&quot;        &quot;unknown&quot;        &quot;unknown&quot;       
+  [21] &quot;grey19&quot;         &quot;gray41&quot;         &quot;grey59&quot;         &quot;gray63&quot;
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">colourName</span><span class="hl std">(</span><span class="hl kwd">stepped</span><span class="hl std">(),</span> <span class="hl kwc">colourList</span><span class="hl std">=HTMLcolours,</span> <span class="hl kwc">colourMetric</span><span class="hl std">=ISCCNBSblock)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">   [1] &quot;unknown&quot; &quot;unknown&quot; &quot;unknown&quot; &quot;unknown&quot; &quot;unknown&quot; &quot;unknown&quot; &quot;unknown&quot; &quot;unknown&quot; &quot;unknown&quot;
+  [10] &quot;unknown&quot; &quot;unknown&quot; &quot;unknown&quot; &quot;unknown&quot; &quot;unknown&quot; &quot;unknown&quot; &quot;unknown&quot; &quot;unknown&quot; &quot;unknown&quot;
+  [19] &quot;unknown&quot; &quot;unknown&quot; &quot;unknown&quot; &quot;unknown&quot; &quot;gray&quot;    &quot;silver&quot;
+</pre></div>
+</div></div>
+<div class="chunk" id="unnamed-chunk-9"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(roloc)</span>
+<span class="hl kwd">options</span><span class="hl std">(</span><span class="hl kwc">roloc.colourList</span><span class="hl std">=ISCCNBScolours,</span>
+        <span class="hl kwc">roloc.colourMetric</span><span class="hl std">=ISCCNBSblock)</span>
+<span class="hl com">## Monotonic hue</span>
+<span class="hl kwd">colourSwatch</span><span class="hl std">(</span><span class="hl kwd">hcl</span><span class="hl std">(</span><span class="hl kwd">seq</span><span class="hl std">(</span><span class="hl num">0</span><span class="hl std">,</span> <span class="hl num">300</span><span class="hl std">,</span> <span class="hl num">60</span><span class="hl std">),</span> <span class="hl num">40</span><span class="hl std">,</span> <span class="hl num">80</span><span class="hl std">,</span> <span class="hl kwc">fixup</span><span class="hl std">=</span><span class="hl num">FALSE</span><span class="hl std">))</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr r"><span class="hl com">## Monotonic luminance</span>
+<span class="hl kwd">colourSwatch</span><span class="hl std">(</span><span class="hl kwd">hcl</span><span class="hl std">(</span><span class="hl num">240</span><span class="hl std">,</span> <span class="hl num">30</span><span class="hl std">,</span> <span class="hl kwd">seq</span><span class="hl std">(</span><span class="hl num">50</span><span class="hl std">,</span> <span class="hl num">80</span><span class="hl std">,</span> <span class="hl num">10</span><span class="hl std">),</span> <span class="hl kwc">fixup</span><span class="hl std">=</span><span class="hl num">FALSE</span><span class="hl std">))</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-9-2.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr r"><span class="hl com">## Monotonic chroma </span>
+<span class="hl kwd">colourSwatch</span><span class="hl std">(</span><span class="hl kwd">hcl</span><span class="hl std">(</span><span class="hl num">240</span><span class="hl std">,</span> <span class="hl kwd">seq</span><span class="hl std">(</span><span class="hl num">10</span><span class="hl std">,</span> <span class="hl num">40</span><span class="hl std">,</span> <span class="hl num">10</span><span class="hl std">),</span> <span class="hl num">80</span><span class="hl std">,</span> <span class="hl kwc">fixup</span><span class="hl std">=</span><span class="hl num">FALSE</span><span class="hl std">))</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-9-3.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(colorspace)</span>
+<span class="hl com">## Monotonic hue</span>
+<span class="hl kwd">colourSwatch</span><span class="hl std">(</span><span class="hl kwd">rainbow_hcl</span><span class="hl std">(</span><span class="hl num">5</span><span class="hl std">))</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-9-4.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr r"><span class="hl com">## Monotonic chroma and luminance</span>
+<span class="hl kwd">colourSwatch</span><span class="hl std">(</span><span class="hl kwd">sequential_hcl</span><span class="hl std">(</span><span class="hl num">5</span><span class="hl std">))</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-9-5.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr r"><span class="hl com">## Diverging chroma and luminance</span>
+<span class="hl kwd">colourSwatch</span><span class="hl std">(</span><span class="hl kwd">diverge_hcl</span><span class="hl std">(</span><span class="hl num">5</span><span class="hl std">))</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-9-6.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(RColorBrewer)</span>
+<span class="hl kwd">colourSwatch</span><span class="hl std">(</span><span class="hl kwd">brewer.pal</span><span class="hl std">(</span><span class="hl num">7</span><span class="hl std">,</span> <span class="hl str">&quot;Greens&quot;</span><span class="hl std">))</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-9-7.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div></div>
+<div class="chunk" id="unnamed-chunk-10"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(pals)</span>
+<span class="hl kwd">colourSwatch</span><span class="hl std">(</span><span class="hl kwd">stepped</span><span class="hl std">())</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-10-1.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" class="plot" /></div></div>
+<div class="chunk" id="unnamed-chunk-11"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">options</span><span class="hl std">(</span><span class="hl kwc">roloc.colourList</span><span class="hl std">=Rcolours)</span>
+</pre></div>
+</div></div>
+    <h2>
+      <a name="summary">2. Discussion</a>
+    </h2>
+    <p>
+  </p>
+    <h2>
+      <a name="summary">3. Summary</a>
+    </h2>
+    <p>
+  </p>
+    <h2>
+      <a name="requirements">4. Technical requirements</a>
+    </h2>
+    <p>
+    The examples and discussion in this document relate to <a href="https://github.com/pmur002/roloc/releases/tag/v0.1">version
+    0.1</a> of the 'roloc' package; version 0.27 of the 
+    <a href="https://github.com/ajrgrodfrey/BrailleR/">BrailleR</a>
+    package.
+  </p>
+    <p>
+    This report was generated within a Docker container
+    (see <a href="#Resources">Resources</a> section below).
+  </p>
+    <h2>
+      <a name="Resources">5. Resources</a>
+    </h2>
+    <ul>
+      <li>
+      The <a href="roloc-brailler.cml">raw source file</a> for this
+      report, a <a href="roloc-brailler.xml">valid XML</a>
+      transformation of the source file, a <a href="roloc-brailler.Rhtml">'knitr' document</a> generated from
+      the XML file, two <a href="common.xsl">XSL</a> <a href="knitr.xsl">files</a> that are used to transform the XML to
+      the 'knitr' document, and a <a href="Makefile">Makefile</a> that
+      contains code for the other transformations and coordinates
+      everything.  
+    </li>
+      <li>
+      This report was generated within a 
+      <a href="https://www.docker.com/">Docker</a> container.
+      The Docker command to build the report is included in the Makefile above.
+      The Docker image for the container is available from
+      <a href="https://hub.docker.com/r/pmur002/roloc-brailler/">Docker Hub</a>;
+      alternatively, the image can be rebuilt from its 
+      <a href="Dockerfile">Dockerfile</a>.
+    </li>
+      <li>
+      The <a href="https://github.com/pmur002/roloc">'roloc' package</a> 
+      on github.
+    </li>
+      <li>
+      The 
+      <a href="https://github.com/ajrgodfrey/BrailleR">'BrailleR' package</a> 
+      on github.
+    </li>
+    </ul>
+    <h2>How to cite this document</h2>
+    <p>
+    Murrell, P. (2017). "A 'roloc' Colour List for 'BrailleR'." 
+    Technical Report 2017-??, University of Auckland. 
+    [ <a href="how-to-cite.bib">bib</a> ] 
+  </p>
+    <h2>
+      <a name="references">6. References</a>
+    </h2>
+    <dl>
+<dt>
+[<a name="roloc-pkg">Murrell, 2017</a>]
+</dt>
+<dd>
+Murrell, P. (2017).
+ <em>roloc: Convert colour specification to colour name</em>.
+ R package version 0.1.
+[ <a href="roloc-nbs-bib_bib.html#roloc-pkg">bib</a> ]
+
+</dd>
+</dl>
+    <hr>
+    <p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img class="CC" alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png"></a><br><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">This document</span>
+    by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Paul
+    Murrell</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative
+    Commons Attribution 4.0 International License</a>.
+  </p>
+  </body>
+</html>

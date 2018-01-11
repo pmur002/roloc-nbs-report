@@ -1,0 +1,274 @@
+<html>
+<head>
+  <style type="text/css">
+    @media print {
+      body { }
+      p.img { text-align: center; page-break-inside: avoid }
+      img.CC { display: inline }
+    }
+    @media screen {
+      body { max-width: 800px; margin: auto }
+      p.img { text-align: center }
+      img.CC { display: inline }
+    }
+    p.date {
+      font-size: smaller;
+      margin: 0;
+    }
+    p.ref {
+      text-indent: -2em;
+      padding-left: 2em;
+    }
+  </style>
+</head>
+<body>
+  <h1>An ISCC-NBS Colour List for 'roloc'</h1>
+  <p>
+    <span style="font-style: italic">by Paul Murrell</span>
+    <a href="http://orcid.org"><img alt="" src="https://www.stat.auckland.ac.nz/~paul/ORCID/ORCiD.png" style="width: 16px; height: 16px; vertical-align: middle" /></a> <span style="font-family: mono; font-size: small"><a href="http://orcid.org/0000-0002-3224-8858">http://orcid.org/0000-0002-3224-8858</a></span>
+  </p>
+  <p class="date">
+    <rcode echo="FALSE" results="asis">
+cat(format(Sys.Date(), "%A %d %B %Y"))
+    </rcode>
+  </p>
+
+  <rcode id="init" echo="FALSE" message="FALSE" results="hide">
+opts_chunk$set(comment=" ", tidy=FALSE)
+options(width=100)
+  </rcode>
+  <rcode echo="FALSE">
+    library(roloc)
+  </rcode>
+
+  <hr/>
+  <p>
+    <a rel="license"
+    href="http://creativecommons.org/licenses/by/4.0/"><img class="CC"
+    alt="Creative Commons License" style="border-width:0"
+    src="https://i.creativecommons.org/l/by/4.0/88x31.png"/></a><br/><span
+    xmlns:dct="http://purl.org/dc/terms/"
+    property="dct:title">This document</span>
+    by <span xmlns:cc="http://creativecommons.org/ns#"
+    property="cc:attributionName">Paul
+    Murrell</span> is licensed under a <a rel="license"
+    href="http://creativecommons.org/licenses/by/4.0/">Creative
+    Commons Attribution 4.0 International License</a>.
+  </p>
+  <hr/>
+<!--
+  <p style="color: red">
+    FIXME: need to tag release 0.6 of roloc in git and push to github
+  </p>
+  <p style="color: red">
+    FIXME: need to create Docker image pmur002/dom-v0.6
+  </p>
+  <p style="color: red">
+    FIXME: once Docker image is ready, need to alter path to PhantomJS
+    and build using 'make docker'
+  </p>
+  <p style="color: red">
+    FIXME: once document is building with 'make docker', need to push
+    pmur002/dom-v0.6 to Docker Hub
+  </p>
+-->
+  <p>
+    This report describes the development of a ('roloc' package) colour list 
+    and colour metric
+    based on the ISCC-NBS System of Color Designation (CITE).
+  </p>
+
+  <toc/>
+
+  <h2><a name="intro">Introduction</a></h2>
+  <p>
+    The 'roloc' package for R (CITE) was created to provide tools 
+    for transforming
+    inscrutable colour specifications into more recognisable colour names.
+    The <code>colourName()</code> function in the 'roloc' package
+    can take an R hexadecimal string colour specification, like 
+    <code>"#123456"</code> and produce a matching colour name.
+  </p>
+  <rcode>
+library(roloc)
+colourName("#123456")
+  </rcode>
+  <p>
+    However, the colour names that the <code>colourName</code> function
+    produces are not 
+    always easily comprehensible themselves.
+  </p>
+  <rcode>
+cols <- hcl(c(0, 120, 240), 80, 60)
+cols
+colourName(cols)
+  </rcode>
+  <p>
+    Fortunately, the <code>colourName</code> function allows us to
+    specify our own list of colour names <em>and</em> our own
+    colour metric for deciding which colour name matches a colour
+    specification.  For example, the <code>HTMLcolours</code>
+    colour list provides a much smaller set of colour names and
+    the <code>euclideanRGB</code> colour metric determine colour 
+    matches based on euclidean distance in the sRGB colour space
+    (rather than the default CIE Luv colour space).
+  </p>
+  <rcode>
+colourName(cols, colourList=HTMLcolours, colourMetric=euclideanRGB)
+  </rcode>
+  <p>
+    While these colours are much easier to interpret, there is a 
+    danger of obtaining a misleading result.  For example, it is not clear that 
+    <code>"grey"</code> is a good description of a colour that
+    we previously identified as some sort of light red
+    (<code><!--rinline colourName(cols[1]) --></code>).
+  </p>
+  <p>
+    What we need is a list of colours that is sufficiently large 
+    so as to provide a reasonable level of accuracy in describing colours,
+    but uses relatively plain descriptive colour names.
+  </p>
+  <p>
+    This document describes the development of a colour list and
+    colour metric based on the 
+    ISCC-NBS System of Color Designation.  
+  </p>
+
+  <rcode>
+library(rolocISCCNBS)
+  </rcode>
+  <rcode message="FALSE">
+library(pals)
+colourName(stepped(), colourList=ISCCNBScolours, colourMetric=ISCCNBSblock)
+  </rcode>
+
+  <p>
+    Slow first call because a list of 2^34 colour names gets loaded.
+  </p>
+
+  <rcode>
+## ISCC-NBS colour names, but euclidean distance to block centroids
+colourName(stepped(), colourList=ISCCNBScolours)
+    
+## ISCC-NBS colour blocks, but non-ISCC-NBS colour list
+colourName(stepped(), colourMetric=ISCCNBSblock)
+colourName(stepped(), colourList=HTMLcolours, colourMetric=ISCCNBSblock)
+  </rcode>
+
+  <rcode fig.height="2" message="FALSE">
+    library(roloc)
+    options(roloc.colourList=ISCCNBScolours,
+            roloc.colourMetric=ISCCNBSblock)
+    ## Monotonic hue
+    colourSwatch(hcl(seq(0, 300, 60), 40, 80, fixup=FALSE))
+    ## Monotonic luminance
+    colourSwatch(hcl(240, 30, seq(50, 80, 10), fixup=FALSE))
+    ## Monotonic chroma 
+    colourSwatch(hcl(240, seq(10, 40, 10), 80, fixup=FALSE))
+
+    library(colorspace)
+    ## Monotonic hue
+    colourSwatch(rainbow_hcl(5))
+    ## Monotonic chroma and luminance
+    colourSwatch(sequential_hcl(5))
+    ## Diverging chroma and luminance
+    colourSwatch(diverge_hcl(5))
+
+    library(RColorBrewer)
+    colourSwatch(brewer.pal(7, "Greens"))
+  </rcode>
+  <rcode fig.height="5" message="FALSE">
+    library(pals)
+    colourSwatch(stepped())    
+  </rcode>
+
+  <rcode>
+    options(roloc.colourList=Rcolours)    
+  </rcode>
+
+
+  <h2><a name="summary">Discussion</a></h2>
+  <p>
+  </p>
+
+  <h2><a name="summary">Summary</a></h2>
+  <p>
+  </p>
+
+  <h2><a name="requirements">Technical requirements</a></h2>
+  <p>
+    The examples and discussion in this document relate to <a
+    href="https://github.com/pmur002/roloc/releases/tag/v0.1">version
+    0.1</a> of the 'roloc' package; version 0.27 of the 
+    <a href="https://github.com/ajrgrodfrey/BrailleR/">BrailleR</a>
+    package.
+  </p>
+  <p>
+    This report was generated within a Docker container
+    (see <a href="#Resources">Resources</a> section below).
+  </p>
+
+  <h2><a name="Resources">Resources</a></h2>
+  <ul>
+    <li>
+      The <a href="roloc-brailler.cml">raw source file</a> for this
+      report, a <a href="roloc-brailler.xml">valid XML</a>
+      transformation of the source file, a <a
+      href="roloc-brailler.Rhtml">'knitr' document</a> generated from
+      the XML file, two <a href="common.xsl">XSL</a> <a
+      href="knitr.xsl">files</a> that are used to transform the XML to
+      the 'knitr' document, and a <a href="Makefile">Makefile</a> that
+      contains code for the other transformations and coordinates
+      everything.  
+    </li>
+    <li>
+      This report was generated within a 
+      <a href="https://www.docker.com/">Docker</a> container.
+      The Docker command to build the report is included in the Makefile above.
+      The Docker image for the container is available from
+      <a href="https://hub.docker.com/r/pmur002/roloc-brailler/">Docker Hub</a>;
+      alternatively, the image can be rebuilt from its 
+      <a href="Dockerfile">Dockerfile</a>.
+    </li>
+    <li>
+      The <a href="https://github.com/pmur002/roloc">'roloc' package</a> 
+      on github.
+    </li>
+    <li>
+      The 
+      <a href="https://github.com/ajrgodfrey/BrailleR">'BrailleR' package</a> 
+      on github.
+    </li>
+  </ul>
+
+  <h2>How to cite this document</h2>
+  <p>
+    Murrell, P. (2017). "A 'roloc' Colour List for 'BrailleR'." 
+    Technical Report 2017-??, University of Auckland. 
+    [ <a href="how-to-cite.bib">bib</a> ] 
+  </p>
+
+  <h2><a name="references">References</a></h2>
+  <ul style="list-style-type: none">
+    <li>
+      <a name="roloc-pkg"></a>
+    </li>
+  </ul>
+
+  <hr/>
+  <p>
+    <a rel="license"
+    href="http://creativecommons.org/licenses/by/4.0/"><img class="CC"
+    alt="Creative Commons License" style="border-width:0"
+    src="https://i.creativecommons.org/l/by/4.0/88x31.png"/></a><br/><span
+    xmlns:dct="http://purl.org/dc/terms/"
+    property="dct:title">This document</span>
+    by <span xmlns:cc="http://creativecommons.org/ns#"
+    property="cc:attributionName">Paul
+    Murrell</span> is licensed under a <a rel="license"
+    href="http://creativecommons.org/licenses/by/4.0/">Creative
+    Commons Attribution 4.0 International License</a>.
+  </p>
+
+</body>
+</html>
