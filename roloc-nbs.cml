@@ -186,9 +186,20 @@ colourName(stepped(), colourList=HTMLcolours, colourMetric=ISCCNBSblock)
     options(roloc.colourList=Rcolours)    
   </rcode>
 
+  <h2><a name="summary">Discussion</a></h2>
+  <p>
+    'aqp' has rgb2munsell() and munsell2rgb() (latter does its own conversions;
+    former just uses euclidean distance in RGB to get closest match)
+    
+    NOTE that the swatch produced for an ISCC-NBS colour block 
+    ONLY represents the block centroid;  a block encompasses many
+    different colours.
+  </p>
 
   <h2><a name="summary">Discussion</a></h2>
   <p>
+    The conversion will have holes because, although ISCC-NBS covers
+    all of Munsell, the sRGB-to-Munsell conversion does not always work.
   </p>
 
   <h2><a name="summary">Summary</a></h2>

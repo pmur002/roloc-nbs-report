@@ -138,16 +138,19 @@ Friday 12 January 2018
           <a href="#summary">2. Discussion</a>
         </li>
         <li>
-          <a href="#summary">3. Summary</a>
+          <a href="#summary">3. Discussion</a>
         </li>
         <li>
-          <a href="#requirements">4. Technical requirements</a>
+          <a href="#summary">4. Summary</a>
         </li>
         <li>
-          <a href="#Resources">5. Resources</a>
+          <a href="#requirements">5. Technical requirements</a>
         </li>
         <li>
-          <a href="#references">6. References</a>
+          <a href="#Resources">6. Resources</a>
+        </li>
+        <li>
+          <a href="#references">7. References</a>
         </li>
       </ul>
     </div>
@@ -249,11 +252,10 @@ Friday 12 January 2018
 <div class="source"><pre class="knitr r"><span class="hl com">## ISCC-NBS colour blocks, but non-ISCC-NBS colour list</span>
 <span class="hl kwd">colourName</span><span class="hl std">(</span><span class="hl kwd">stepped</span><span class="hl std">(),</span> <span class="hl kwc">colourMetric</span><span class="hl std">=ISCCNBSblock)</span>
 </pre></div>
-<div class="output"><pre class="knitr r">   [1] &quot;firebrick3&quot;     &quot;indianred3&quot;     &quot;unknown&quot;        &quot;lavenderblush1&quot; &quot;orange4&quot;       
-   [6] &quot;unknown&quot;        &quot;burlywood3&quot;     &quot;navajowhite2&quot;   &quot;chartreuse4&quot;    &quot;chartreuse4&quot;   
-  [11] &quot;unknown&quot;        &quot;unknown&quot;        &quot;cadetblue4&quot;     &quot;cadetblue3&quot;     &quot;cadetblue3&quot;    
-  [16] &quot;slategray1&quot;     &quot;royalblue3&quot;     &quot;purple3&quot;        &quot;unknown&quot;        &quot;unknown&quot;       
-  [21] &quot;grey19&quot;         &quot;gray41&quot;         &quot;grey59&quot;         &quot;gray63&quot;
+<div class="output"><pre class="knitr r">   [1] &quot;brown1&quot;        &quot;indianred&quot;     &quot;unknown&quot;       &quot;lavenderblush&quot; &quot;orange4&quot;       &quot;unknown&quot;      
+   [7] &quot;burlywood3&quot;    &quot;antiquewhite&quot;  &quot;chartreuse4&quot;   &quot;chartreuse4&quot;   &quot;unknown&quot;       &quot;unknown&quot;      
+  [13] &quot;cadetblue4&quot;    &quot;cadetblue3&quot;    &quot;cadetblue3&quot;    &quot;lightcyan2&quot;    &quot;royalblue&quot;     &quot;blueviolet&quot;   
+  [19] &quot;unknown&quot;       &quot;unknown&quot;       &quot;gray1&quot;         &quot;dimgray&quot;       &quot;gray43&quot;        &quot;darkgray&quot;
 </pre></div>
 <div class="source"><pre class="knitr r"><span class="hl kwd">colourName</span><span class="hl std">(</span><span class="hl kwd">stepped</span><span class="hl std">(),</span> <span class="hl kwc">colourList</span><span class="hl std">=HTMLcolours,</span> <span class="hl kwc">colourMetric</span><span class="hl std">=ISCCNBSblock)</span>
 </pre></div>
@@ -305,14 +307,23 @@ Friday 12 January 2018
       <a name="summary">2. Discussion</a>
     </h2>
     <p>
+    'aqp' has rgb2munsell() and munsell2rgb() (latter does its own conversions;
+    former just uses euclidean distance in RGB to get closest match)
   </p>
     <h2>
-      <a name="summary">3. Summary</a>
+      <a name="summary">3. Discussion</a>
+    </h2>
+    <p>
+    The conversion will have holes because, although ISCC-NBS covers
+    all of Munsell, the sRGB-to-Munsell conversion does not always work.
+  </p>
+    <h2>
+      <a name="summary">4. Summary</a>
     </h2>
     <p>
   </p>
     <h2>
-      <a name="requirements">4. Technical requirements</a>
+      <a name="requirements">5. Technical requirements</a>
     </h2>
     <p>
     The examples and discussion in this document relate to <a href="https://github.com/pmur002/roloc/releases/tag/v0.1">version
@@ -325,7 +336,7 @@ Friday 12 January 2018
     (see <a href="#Resources">Resources</a> section below).
   </p>
     <h2>
-      <a name="Resources">5. Resources</a>
+      <a name="Resources">6. Resources</a>
     </h2>
     <ul>
       <li>
@@ -363,7 +374,7 @@ Friday 12 January 2018
     [ <a href="how-to-cite.bib">bib</a> ] 
   </p>
     <h2>
-      <a name="references">6. References</a>
+      <a name="references">7. References</a>
     </h2>
     <dl>
 <dt>
