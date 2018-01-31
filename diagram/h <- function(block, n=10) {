@@ -1,0 +1,58 @@
+extrude3d                 package:rgl                  R Documentation
+
+_G_e_n_e_r_a_t_e _e_x_t_r_u_s_i_o_n _m_e_s_h
+
+_D_e_s_c_r_i_p_t_i_o_n:
+
+     Given a two-dimensional polygon, this generates a
+     three-dimensional extrusion of the shape by triangulating the
+     polygon and creating a cylinder with that shape as the end faces.
+
+_U_s_a_g_e:
+
+     extrude3d(x, y = NULL, thickness = 1, smooth = FALSE, ...)
+     
+_A_r_g_u_m_e_n_t_s:
+
+    x, y: A polygon description in one of the forms supported by
+          ‘triangulate’.
+
+thickness: The extrusion will have this thickness.
+
+  smooth: logical; should normals be added so that the edges of the
+          extrusion appear smooth?
+
+     ...: Other parameters to pass to ‘tmesh3d’ when constructing the
+          mesh.
+
+_D_e_t_a_i_l_s:
+
+     The extrusion is always constructed with the polygon in the xy
+     plane at ‘z = 0’ and another copy at ‘z = thickness’.  Use the
+     transformation functions (e.g. ‘rotate3d’) to obtain other
+     orientations and placements.
+
+_V_a_l_u_e:
+
+     A mesh object containing a triangulation of the polygon for each
+     face, and quadrilaterals for the sides.
+
+_A_u_t_h_o_r(_s):
+
+     Duncan Murdoch
+
+_S_e_e _A_l_s_o:
+
+     ‘polygon3d’ for a simple polygon, ‘triangulate’ for the
+     triangulation, ‘turn3d’ for a solid of rotation.
+
+_E_x_a_m_p_l_e_s:
+
+     x <- c(1:10, 10:1)
+     y <- rev(c(rep(c(0, 2), 5), rep(c(1.5, -0.5), 5)))
+     plot(x, y, type = "n")
+     polygon(x, y)
+     open3d()
+     shade3d( extrude3d(x, y), col = "red" )
+     
+
