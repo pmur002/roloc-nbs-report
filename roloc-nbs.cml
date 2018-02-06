@@ -589,10 +589,10 @@ cat(gsub("\n.+", "", attr(result, "condition")$message), "\n")
   <h2><a name="Resources">Resources</a></h2>
   <ul>
     <li>
-      The <a href="roloc-brailler.cml">raw source file</a> for this
-      report, a <a href="roloc-brailler.xml">valid XML</a>
+      The <a href="roloc-nbs.cml">raw source file</a> for this
+      report, a <a href="roloc-nbs.xml">valid XML</a>
       transformation of the source file, a <a
-      href="roloc-brailler.Rhtml">'knitr' document</a> generated from
+      href="roloc-nbs.Rhtml">'knitr' document</a> generated from
       the XML file, 
       two <a href="toc.R">R</a> <a href="bib.R">files</a> and
       the <a href="roloc.bib">bibtex file</a>
@@ -602,23 +602,21 @@ cat(gsub("\n.+", "", attr(result, "condition")$message), "\n")
       the 'knitr' document, and a <a href="Makefile">Makefile</a> that
       contains code for the other transformations and coordinates
       everything.  
+      These materials are also available
+      on <a href="https://github.com/pmur002/roloc-nbs-report/releases/tag/v1">github</a>.
     </li>
     <li>
       This report was generated within a 
       <a href="https://www.docker.com/">Docker</a> container.
       The Docker command to build the report is included in the Makefile above.
       The Docker image for the container is available from
-      <a href="https://hub.docker.com/r/pmur002/roloc-brailler/">Docker Hub</a>;
+      <a href="https://hub.docker.com/r/pmur002/roloc-nbs/">Docker Hub</a>;
       alternatively, the image can be rebuilt from its 
       <a href="Dockerfile">Dockerfile</a>.
     </li>
     <li>
-      The <a href="https://github.com/pmur002/roloc">'roloc' package</a> 
-      on github.
-    </li>
-    <li>
       The 
-      <a href="https://github.com/ajrgodfrey/BrailleR">'BrailleR' package</a> 
+      <a href="https://github.com/pmur002/rolocISCCNBS">'rolocISCCNBS' package</a> 
       on github.
     </li>
   </ul>

@@ -97,7 +97,7 @@
     </p>
     <p class="date">
     Version 1:
-Wednesday 07 February 2018
+Tuesday 06 February 2018
   </p>
 
 
@@ -576,7 +576,7 @@ Wednesday 07 February 2018
 <span class="hl std">colour</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">import</span><span class="hl std">(</span><span class="hl str">&quot;colour&quot;</span><span class="hl std">)</span>
 <span class="hl kwd">apply</span><span class="hl std">(xyYcolours,</span> <span class="hl num">1</span><span class="hl std">, colour</span><span class="hl opt">$</span><span class="hl std">xyY_to_munsell_colour)</span>
 </pre></div>
-<div class="output"><pre class="knitr r">  [1] &quot;3.0PB 1.9/4.2&quot; &quot;2.9PB 2.0/4.2&quot; &quot;2.9PB 2.1/4.1&quot;
+<div class="error"><pre class="knitr r">  Error in py_get_attr_impl(x, name, silent): AttributeError: 'module' object has no attribute 'xyY_to_munsell_colour'
 </pre></div>
 </div></div>
     <p>
@@ -587,12 +587,12 @@ Wednesday 07 February 2018
     'colorscience' package.
   </p>
 <div class="chunk" id="unnamed-chunk-19"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">munsellColours</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">apply</span><span class="hl std">(xyYcolours,</span> <span class="hl num">1</span><span class="hl std">, colour</span><span class="hl opt">$</span><span class="hl std">xyY_to_munsell_colour)</span>
-<span class="hl kwd">ColorBlockFromMunsell</span><span class="hl std">(</span><span class="hl kwd">MunsellSpecToHVC</span><span class="hl std">(munsellColours))</span>
 </pre></div>
-<div class="output"><pre class="knitr r">                HVC.H HVC.V HVC.C Number      Name
-  3.0PB 1.9/4.2  73.0   1.9   4.2    183 dark blue
-  2.9PB 2.0/4.2  72.9   2.0   4.2    183 dark blue
-  2.9PB 2.1/4.1  72.9   2.1   4.1    183 dark blue
+<div class="error"><pre class="knitr r">  Error in py_get_attr_impl(x, name, silent): AttributeError: 'module' object has no attribute 'xyY_to_munsell_colour'
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">ColorBlockFromMunsell</span><span class="hl std">(</span><span class="hl kwd">MunsellSpecToHVC</span><span class="hl std">(munsellColours))</span>
+</pre></div>
+<div class="error"><pre class="knitr r">  Error in MunsellSpecToHVC(munsellColours): object 'munsellColours' not found
 </pre></div>
 </div></div>
     <p>
@@ -645,9 +645,14 @@ Wednesday 07 February 2018
 <div class="chunk" id="unnamed-chunk-20"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">options</span><span class="hl std">(</span><span class="hl kwc">roloc.colourList</span><span class="hl std">=ISCCNBScolours,</span>
     <span class="hl kwc">roloc.colourMetric</span><span class="hl std">=ISCCNBSblock)</span>
 <span class="hl kwd">library</span><span class="hl std">(pals)</span>
-<span class="hl kwd">colourSwatch</span><span class="hl std">(</span><span class="hl kwd">stepped</span><span class="hl std">())</span>
 </pre></div>
-</div><div class="rimage default"><img src="figure/unnamed-chunk-20-1.png" title="plot of chunk unnamed-chunk-20" alt="plot of chunk unnamed-chunk-20" class="plot" /></div></div>
+<div class="error"><pre class="knitr r">  Error in library(pals): there is no package called 'pals'
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">colourSwatch</span><span class="hl std">(</span><span class="hl kwd">stepped</span><span class="hl std">())</span>
+</pre></div>
+<div class="error"><pre class="knitr r">  Error in stepped(): could not find function &quot;stepped&quot;
+</pre></div>
+</div></div>
     <h2>
       <a name="summary">7. Discussion</a>
     </h2>
@@ -671,7 +676,7 @@ Wednesday 07 February 2018
 <div class="chunk" id="unnamed-chunk-21"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">colour</span><span class="hl opt">$</span><span class="hl kwd">xyY_to_munsell_colour</span><span class="hl std">(</span><span class="hl kwd">XYZ2xyY</span><span class="hl std">(</span><span class="hl kwd">RGB2XYZ</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">0</span><span class="hl std">,</span> <span class="hl num">0.1</span><span class="hl std">,</span> <span class="hl num">0.1</span><span class="hl std">),</span> <span class="hl kwc">illuminant</span><span class="hl std">=</span><span class="hl str">&quot;C&quot;</span><span class="hl std">)))</span>
 </pre></div>
 </div></div>
-<div class="chunk" id="unnamed-chunk-22"><div class="rcode"><div class="output"><pre class="knitr r">  AssertionError: &quot;0.69020652865&quot; value must be in domain [1, 10]!
+<div class="chunk" id="unnamed-chunk-22"><div class="rcode"><div class="output"><pre class="knitr r">  AttributeError: 'module' object has no attribute 'xyY_to_munsell_colour'
 </pre></div>
 </div></div>
     <p>
@@ -681,7 +686,7 @@ Wednesday 07 February 2018
 <div class="chunk" id="unnamed-chunk-23"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">colour</span><span class="hl opt">$</span><span class="hl kwd">xyY_to_munsell_colour</span><span class="hl std">(</span><span class="hl kwd">XYZ2xyY</span><span class="hl std">(</span><span class="hl kwd">RGB2XYZ</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl std">,</span> <span class="hl num">1</span><span class="hl std">,</span> <span class="hl num">0</span><span class="hl std">),</span> <span class="hl kwc">illuminant</span><span class="hl std">=</span><span class="hl str">&quot;C&quot;</span><span class="hl std">)))</span>
 </pre></div>
 </div></div>
-<div class="chunk" id="unnamed-chunk-24"><div class="rcode"><div class="output"><pre class="knitr r">  RuntimeError: Maximum inner iterations count reached without convergence!
+<div class="chunk" id="unnamed-chunk-24"><div class="rcode"><div class="output"><pre class="knitr r">  AttributeError: 'module' object has no attribute 'xyY_to_munsell_colour'
 </pre></div>
 </div></div>
     <!--
@@ -699,7 +704,7 @@ colour$xyY_to_munsell_colour(XYZ2xyY(RGB2XYZ(c(0,.1,.5), illuminant="C")))
 <div class="chunk" id="unnamed-chunk-25"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">colour</span><span class="hl opt">$</span><span class="hl kwd">xyY_to_munsell_colour</span><span class="hl std">(</span><span class="hl kwd">XYZ2xyY</span><span class="hl std">(</span><span class="hl kwd">RGB2XYZ</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">0</span><span class="hl std">,</span> <span class="hl num">0</span><span class="hl std">,</span> <span class="hl num">1</span><span class="hl std">),</span> <span class="hl kwc">illuminant</span><span class="hl std">=</span><span class="hl str">&quot;C&quot;</span><span class="hl std">)))</span>
 </pre></div>
 </div></div>
-<div class="chunk" id="unnamed-chunk-26"><div class="rcode"><div class="output"><pre class="knitr r">  ValueError: &quot;[[ 0.14915498  0.05849607  0.07642525]]&quot; is not within &quot;MacAdam&quot; limits for illuminant &quot;C&quot;!
+<div class="chunk" id="unnamed-chunk-26"><div class="rcode"><div class="output"><pre class="knitr r">  AttributeError: 'module' object has no attribute 'xyY_to_munsell_colour'
 </pre></div>
 </div></div>
     <p>
@@ -760,9 +765,9 @@ colour$xyY_to_munsell_colour(XYZ2xyY(RGB2XYZ(c(0,.1,.5), illuminant="C")))
     </h2>
     <ul>
       <li>
-      The <a href="roloc-brailler.cml">raw source file</a> for this
-      report, a <a href="roloc-brailler.xml">valid XML</a>
-      transformation of the source file, a <a href="roloc-brailler.Rhtml">'knitr' document</a> generated from
+      The <a href="roloc-nbs.cml">raw source file</a> for this
+      report, a <a href="roloc-nbs.xml">valid XML</a>
+      transformation of the source file, a <a href="roloc-nbs.Rhtml">'knitr' document</a> generated from
       the XML file, 
       two <a href="toc.R">R</a> <a href="bib.R">files</a> and
       the <a href="roloc.bib">bibtex file</a>
@@ -771,23 +776,21 @@ colour$xyY_to_munsell_colour(XYZ2xyY(RGB2XYZ(c(0,.1,.5), illuminant="C")))
       the 'knitr' document, and a <a href="Makefile">Makefile</a> that
       contains code for the other transformations and coordinates
       everything.  
+      These materials are also available
+      on <a href="https://github.com/pmur002/roloc-nbs-report/releases/tag/v1">github</a>.
     </li>
       <li>
       This report was generated within a 
       <a href="https://www.docker.com/">Docker</a> container.
       The Docker command to build the report is included in the Makefile above.
       The Docker image for the container is available from
-      <a href="https://hub.docker.com/r/pmur002/roloc-brailler/">Docker Hub</a>;
+      <a href="https://hub.docker.com/r/pmur002/roloc-nbs/">Docker Hub</a>;
       alternatively, the image can be rebuilt from its 
       <a href="Dockerfile">Dockerfile</a>.
     </li>
       <li>
-      The <a href="https://github.com/pmur002/roloc">'roloc' package</a> 
-      on github.
-    </li>
-      <li>
       The 
-      <a href="https://github.com/ajrgodfrey/BrailleR">'BrailleR' package</a> 
+      <a href="https://github.com/pmur002/rolocISCCNBS">'rolocISCCNBS' package</a> 
       on github.
     </li>
     </ul>
@@ -919,8 +922,8 @@ Judd, D. B. and Kelly, K. L. (1939).
 </dt>
 <dd>
 Kelly, K. L. and Judd, D. B. (1955).
- The iscc–nbs method of designating colors and a dictionary of color
-  names.
+ The ISCC--NBS method of designating colors and a dictionary of
+  color names.
 [ <a href="roloc-nbs-bib_bib.html#isccnbs1955">bib</a> ]
 
 </dd>
@@ -970,7 +973,7 @@ Murrell, P. (2018b).
 </dt>
 <dd>
 Nickerson, D. and Newhall, S. (1941).
- Central notations for iscc–nbs color names.
+ Central notations for ISCC--NBS color names.
  <em>Journal of the Optical Society of America</em>, 31:587.
 [ <a href="roloc-nbs-bib_bib.html#isccnbs-centroids">bib</a> ]
 
@@ -1088,7 +1091,7 @@ Wikipedia (2018c).
 </dt>
 <dd>
 Wikipedia (2018d).
- ISCC–NBS system.
+ ISCC--NBS system.
  <a href="https://en.wikipedia.org/wiki/ISCC---NBS_system">https://en.wikipedia.org/wiki/ISCC---NBS_system</a>.
  Accessed: 2018-02-07.
 [ <a href="roloc-nbs-bib_bib.html#isccnbs-wiki">bib</a> ]
