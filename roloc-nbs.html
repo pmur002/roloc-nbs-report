@@ -96,8 +96,9 @@
       </span>
     </p>
     <p class="date">
-Wednesday 31 January 2018
-    </p>
+    Version 1:
+Wednesday 07 February 2018
+  </p>
 
 
     <hr>
@@ -124,9 +125,9 @@ Wednesday 31 January 2018
   </p>
 -->
     <p>
-    This report describes the development of a ('roloc' package) colour list 
-    and colour metric
-    based on the ISCC-NBS System of Color Designation (CITE).
+    This report describes the development of a colour list 
+    and colour metric for the 'roloc' package that is
+    based on the ISCC-NBS System of Color Designation.
   </p>
     <div>
       <h2>Table of Contents:</h2>
@@ -170,12 +171,13 @@ Wednesday 31 January 2018
       <a name="intro">1. Introduction</a>
     </h2>
     <p>
-    The 'roloc' package for R (CITE) was created to provide tools 
+    The 'roloc' package for R (<a href="#murrell-roloc">Murrell, 2018a</a>, <a href="#roloc-pkg">Murrell, 2018b</a>)
+    was created to provide tools 
     for transforming
     inscrutable colour specifications into more recognisable colour names.
     The <code>colourName()</code> function in the 'roloc' package
     can take an R hexadecimal string colour specification, like 
-    <code>"#123456"</code> and produce a matching colour name.
+    <code>"#123456"</code>, and produce a matching colour name.
   </p>
 <div class="chunk" id="unnamed-chunk-3"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(roloc)</span>
 <span class="hl kwd">colourName</span><span class="hl std">(</span><span class="hl str">&quot;#123456&quot;</span><span class="hl std">)</span>
@@ -208,8 +210,10 @@ Wednesday 31 January 2018
     specification.  For example, the <code>HTMLcolours</code>
     colour list provides a much smaller set of colour names and
     the <code>euclideanRGB</code> colour metric determines colour 
-    matches based on euclidean distance in the sRGB colour space (CITE)
-    (rather than the default euclidean distance in CIE LUV colour space; CITE).
+    matches based on euclidean distance in the sRGB colour space 
+    (<a href="#srgb">Wikipedia, 2018g</a>)
+    (rather than the default euclidean distance in CIE LUV colour space; 
+    <a href="#cieluv">Wikipedia, 2018b</a>).
   </p>
 <div class="chunk" id="unnamed-chunk-5"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">colourName</span><span class="hl std">(cols,</span> <span class="hl kwc">colourList</span><span class="hl std">=HTMLcolours,</span> <span class="hl kwc">colourMetric</span><span class="hl std">=euclideanRGB)</span>
 </pre></div>
@@ -231,7 +235,8 @@ Wednesday 31 January 2018
     <p>
     This document describes the development of a colour list and
     colour metric based on the 
-    ISCC-NBS System of Color Designation,
+    ISCC-NBS System of Color Designation (<a href="#isccnbs-wiki">Wikipedia, 2018d</a>, 
+    <a href="#isccnbs1939">Judd and Kelly, 1939</a>, <a href="#isccnbs1955">Kelly and Judd, 1955</a>),
     which produces colour names that have simple interpretations.  
   </p>
 <div class="chunk" id="unnamed-chunk-6"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(rolocISCCNBS)</span>
@@ -269,9 +274,17 @@ Wednesday 31 January 2018
     of colour space), so that all colours fall into exactly
     one block and hence correspond to exactly one ISCC-NBS colour name.
     More precisely, 
-    the ISCC-NBS System is defined in terms of the Munsell colour space (CITE),
-    so any Munsell colour specification falls into exactly one ISCC-NBS
+    the ISCC-NBS System is defined in terms of the Munsell colour space 
+    (<a href="#munsell-wiki">Wikipedia, 2018f</a>),
+    so that any Munsell colour specification falls into exactly one ISCC-NBS
     block and corresponds to exactly one ISCC-NBS colour name.
+  </p>
+    <p>
+    The images below show two views of a subset of the ISCC-NBS colour
+    blocks in Munsell colour space.  Each ISCC-NBS block is filled with
+    a single colour (based on the centroid of the block) to indicate that
+    all Munsell colours within that block correspond to the same 
+    ISCC-NBS colour name.
   </p>
     <p class="img">
       <img src="diagram/ISCCNBS-1-trim.png" style="margin-right: 20px">
@@ -286,7 +299,8 @@ Wednesday 31 January 2018
     colour name.
     Each ISCC-NBS colour name corresponds to a block of colours, rather 
     than a single colour specification, however, there are published
-    lists of sRGB centroids for the ISCC-NBS colour blocks (CITE).
+    lists of sRGB centroids for the ISCC-NBS colour blocks 
+    (<a href="#isccnbs-centroids">Nickerson and Newhall, 1941</a>, <a href="#isccnbs-tx4">Texas Precancel Club, 2018</a>).
     These sRGB centroids were used to generate the 
     <code>ISCCNBScolours</code> colour list in the 'rolocISCCNBS' 
     package.  
@@ -302,25 +316,34 @@ Wednesday 31 January 2018
 </pre></div>
 <div class="output"><pre class="knitr r">  [1] &quot;deep pink&quot;             &quot;vivid yellowish green&quot; &quot;brilliant blue&quot;
 </pre></div>
-<div class="source"><pre class="knitr r"><span class="hl kwd">colourSwatch</span><span class="hl std">(match)</span>
-</pre></div>
-</div><div class="rimage default"><img src="figure/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" class="plot" /></div></div>
+</div></div>
     <p>
-    However, using a euclidean metric with the ISCC-NBS colour block
-    centroids ignores the colour block boundaries, which can produce
+    We can also produce colour swatches to
+    help visualise the colour match, although this is a bit misleading
+    because the colour of
+    the swatch just represents the centroid of the relevant 
+    ISCC-NBS colour block.
+  </p>
+<div class="chunk" id="unnamed-chunk-9"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">colourSwatch</span><span class="hl std">(match)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div></div>
+    <h2>
+      <a name="ISCCNBSblock">4. An ISCC-NBS colour metric</a>
+    </h2>
+    <p>
+    If we use a euclidean metric with the ISCC-NBS colour block
+    centroids to determine distances from colour specifications, 
+    we ignore the colour block boundaries, and this can produce
     some surprising results.  For example, the following code 
     obtains colour names for a set of grey colour specifications and
     the resulting names are not all neutral greys.
   </p>
-<div class="chunk" id="unnamed-chunk-9"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">colourName</span><span class="hl std">(</span><span class="hl kwd">grey</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">4</span><span class="hl opt">/</span><span class="hl num">5</span><span class="hl std">),</span> <span class="hl kwc">colourList</span><span class="hl std">=ISCCNBScolours)</span>
+<div class="chunk" id="unnamed-chunk-10"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">colourName</span><span class="hl std">(</span><span class="hl kwd">grey</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">4</span><span class="hl opt">/</span><span class="hl num">5</span><span class="hl std">),</span> <span class="hl kwc">colourList</span><span class="hl std">=ISCCNBScolours)</span>
 </pre></div>
 <div class="output"><pre class="knitr r">  [1] &quot;dark grayish olive green&quot; &quot;dark gray&quot;                &quot;purplish gray&quot;           
   [4] &quot;light purplish gray&quot;
 </pre></div>
 </div></div>
-    <h2>
-      <a name="ISCCNBSblock">4. An ISCC-NBS colour metric</a>
-    </h2>
     <p>
     Because ISCC-NBS colour names actually correspond to blocks of
     colour space, a more appropriate colour metric involves determining
@@ -349,7 +372,7 @@ Wednesday 31 January 2018
     are all neutral greys (because they all fall within neutral grey
     colour blocks in the ISCC-NBS System).
   </p>
-<div class="chunk" id="unnamed-chunk-10"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">colourName</span><span class="hl std">(</span><span class="hl kwd">grey</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">4</span><span class="hl opt">/</span><span class="hl num">5</span><span class="hl std">),</span> <span class="hl kwc">colourList</span><span class="hl std">=ISCCNBScolours,</span> <span class="hl kwc">colourMetric</span><span class="hl std">=ISCCNBSblock)</span>
+<div class="chunk" id="unnamed-chunk-11"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">colourName</span><span class="hl std">(</span><span class="hl kwd">grey</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">4</span><span class="hl opt">/</span><span class="hl num">5</span><span class="hl std">),</span> <span class="hl kwc">colourList</span><span class="hl std">=ISCCNBScolours,</span> <span class="hl kwc">colourMetric</span><span class="hl std">=ISCCNBSblock)</span>
 </pre></div>
 <div class="output"><pre class="knitr r">  [1] &quot;black&quot;       &quot;dark gray&quot;   &quot;medium gray&quot; &quot;light gray&quot;
 </pre></div>
@@ -375,11 +398,51 @@ Wednesday 31 January 2018
     <code>NA</code> values in the matrix because some colours in the colour
     list have not converted successfully to Munsell colours (the colour
     could not be represented in Munsell colour space).  For example,
-    neither <code>"black"</code> nor <code>"yellow"</code> have
-    converted properly.  This is partly a limitation of the tools
+    neither <code>"yellow"</code>, <code>"navy"</code>, nor <code>"blue"</code>
+    have converted properly.  This is partly a limitation of the tools
     used to perform the conversion, which will be discussed more later.
   </p>
-<div class="chunk" id="unnamed-chunk-11"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">match</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">colourMatch</span><span class="hl std">(cols,</span> <span class="hl kwc">colourList</span><span class="hl std">=HTMLcolours,</span> <span class="hl kwc">colourMetric</span><span class="hl std">=ISCCNBSblock)</span>
+<div class="chunk" id="unnamed-chunk-12"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">match</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">colourMatch</span><span class="hl std">(cols,</span> <span class="hl kwc">colourList</span><span class="hl std">=HTMLcolours,</span> <span class="hl kwc">colourMetric</span><span class="hl std">=ISCCNBSblock)</span>
+<span class="hl std">match</span>
+</pre></div>
+<div class="output"><pre class="knitr r">  $colour
+  [1] &quot;#E16A86&quot; &quot;#50A315&quot; &quot;#009ADE&quot;
+  
+  $colourList
+  $names
+   [1] &quot;black&quot;   &quot;silver&quot;  &quot;gray&quot;    &quot;white&quot;   &quot;maroon&quot;  &quot;red&quot;     &quot;purple&quot;  &quot;fuschia&quot; &quot;green&quot;  
+  [10] &quot;lime&quot;    &quot;olive&quot;   &quot;yellow&quot;  &quot;navy&quot;    &quot;blue&quot;    &quot;teal&quot;    &quot;aqua&quot;   
+  
+  $colours
+                R         G         B
+   [1,] 0.0000000 0.0000000 0.0000000
+   [2,] 0.7529412 0.7529412 0.7529412
+   [3,] 0.5019608 0.5019608 0.5019608
+   [4,] 1.0000000 1.0000000 1.0000000
+   [5,] 0.5019608 0.0000000 0.0000000
+   [6,] 1.0000000 0.0000000 0.0000000
+   [7,] 0.5019608 0.0000000 0.5019608
+   [8,] 1.0000000 0.0000000 1.0000000
+   [9,] 0.0000000 0.5019608 0.0000000
+  [10,] 0.0000000 1.0000000 0.0000000
+  [11,] 0.5019608 0.5019608 0.0000000
+  [12,] 1.0000000 1.0000000 0.0000000
+  [13,] 0.0000000 0.0000000 0.5019608
+  [14,] 0.0000000 0.0000000 1.0000000
+  [15,] 0.0000000 0.5019608 0.5019608
+  [16,] 0.0000000 1.0000000 1.0000000
+  
+  attr(,&quot;class&quot;)
+  [1] &quot;colourList&quot;
+  
+  $colourDist
+       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14] [,15] [,16]
+  [1,]  Inf  Inf  Inf  Inf  Inf  Inf  Inf  Inf  Inf   Inf   Inf    NA    NA    NA   Inf   Inf
+  [2,]  Inf  Inf  Inf  Inf  Inf  Inf  Inf  Inf    0     0   Inf    NA    NA    NA   Inf   Inf
+  [3,]  Inf  Inf  Inf  Inf  Inf  Inf  Inf  Inf  Inf   Inf   Inf    NA    NA    NA   Inf   Inf
+  
+  attr(,&quot;class&quot;)
+  [1] &quot;colourMatch&quot;
 </pre></div>
 </div></div>
     <p>
@@ -387,7 +450,7 @@ Wednesday 31 January 2018
     specifications the colour is unknown, but for the other colour
     specifications there are two colour names that match.
   </p>
-<div class="chunk" id="unnamed-chunk-12"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">colourNames</span><span class="hl std">(match)</span>
+<div class="chunk" id="unnamed-chunk-13"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">colourNames</span><span class="hl std">(match)</span>
 </pre></div>
 <div class="output"><pre class="knitr r">  [[1]]
   [1] &quot;unknown&quot;
@@ -400,7 +463,7 @@ Wednesday 31 January 2018
 </pre></div>
 <div class="source"><pre class="knitr r"><span class="hl kwd">colourSwatches</span><span class="hl std">(match)</span>
 </pre></div>
-</div><div class="rimage default"><img src="figure/unnamed-chunk-12-1.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" class="plot" /></div></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-13-1.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" class="plot" /></div></div>
     <p>
     As previously mentioned, this may be more interesting than useful.
   </p>
@@ -422,7 +485,9 @@ Wednesday 31 January 2018
     within Munsell colour space, but the 
     <code>ISCCNBSblock</code> function is given both a set of colour
     specifications and a colour list in terms of sRGB colour space.
-    We need a conversion from sRGB to Munsell (and on to ISCC-NBS colour
+    This means that 
+    we need a conversion from sRGB colours to Munsell colours
+    (and on to ISCC-NBS colour
     blocks).  
   </p>
     <p>
@@ -430,74 +495,84 @@ Wednesday 31 January 2018
     space is essentially a discrete colour space;  there are 
     only known conversions between sRGB and Munsell colours
     for a finite set of Munsell colours
-    (CITE RIT); there is no general formula.
+    (<a href="#munsell-renotation">Rochester Institute of Technology, 2018</a>); there is no general formula.
   </p>
     <p>
     One way to use this finite set of conversions is to just find
     the closest match.
     Two packages were found that performed this sort of
     sRGB to Munsell conversion:
-    'munsell' (CITE) and 'aqp' (CITE).  Both of these packages
-    use euclidean distance (within CIE LUV or CIE LAB colour spaces)
+    'munsell' (<a href="#munsell-pkg">Wickham, 2016</a>) and 
+    'aqp' (<a href="#aqp-pkg">Beaudette et al., 2013</a>).  Both of these packages
+    use euclidean distance (within CIE LUV or CIE LAB colour spaces;
+    <a href="#cielab">Wikipedia, 2018e</a>)
     to determine the nearest Munsell colour match for a given sRGB 
     colour.  The problem with this approach is
     that different sRGB colour specifications
     will be converted to the same Munsell colour.
   </p>
-<div class="chunk" id="unnamed-chunk-13"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">colours</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">rbind</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">.09</span><span class="hl std">,</span> <span class="hl num">.19</span><span class="hl std">,</span> <span class="hl num">.29</span><span class="hl std">),</span>
+<div class="chunk" id="unnamed-chunk-14"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">colours</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">rbind</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">.09</span><span class="hl std">,</span> <span class="hl num">.19</span><span class="hl std">,</span> <span class="hl num">.29</span><span class="hl std">),</span>
              <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">.10</span><span class="hl std">,</span> <span class="hl num">.20</span><span class="hl std">,</span> <span class="hl num">.30</span><span class="hl std">),</span>
              <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">.11</span><span class="hl std">,</span> <span class="hl num">.21</span><span class="hl std">,</span> <span class="hl num">.31</span><span class="hl std">))</span>
 </pre></div>
 </div></div>
-<div class="chunk" id="unnamed-chunk-14"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(munsell)</span>
+<div class="chunk" id="unnamed-chunk-15"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(munsell)</span>
 <span class="hl kwd">rgb2mnsl</span><span class="hl std">(colours)</span>
 </pre></div>
 <div class="output"><pre class="knitr r">  [1] &quot;2.5PB 2/4&quot; &quot;2.5PB 2/4&quot; &quot;2.5PB 2/4&quot;
 </pre></div>
 </div></div>
-<div class="chunk" id="unnamed-chunk-15"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(aqp)</span>
+<div class="chunk" id="unnamed-chunk-16"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(aqp)</span>
 <span class="hl kwd">rgb2munsell</span><span class="hl std">(colours)</span>
 </pre></div>
 <div class="output"><pre class="knitr r">      hue value chroma       sigma
-  1 2.5PB     2      4 0.011622113
-  2 2.5PB     2      4 0.007448610
-  3 2.5PB     2      4 0.009862735
+  1 2.5PB     2      4 0.015824182
+  2 2.5PB     2      4 0.005134962
+  3 2.5PB     2      4 0.020058189
 </pre></div>
 </div></div>
     <p>
     Another approach to using
     this finite set of sRGB-Munsell conversions 
     is to interpolate between the known matches.
-    This approach has been implemented by Paul Centore (CITE)
+    This approach has been implemented by Paul Centore 
+    (<a href="#COL:COL20715">Centore, 2012</a>)
     in several different languages, including R, Octave, and Python.  
     Unfortunately, 
-    the R version, the 'munsellinterpol' package (CITE), does not
+    the R version, the 'munsellinterpol' package 
+    (<a href="#munsellinterpol-pkg">Gama and Centore, 2015</a>), does not
     appear to work correctly.
-    However, the Python version, the 'Colour' package (CITE),
-    does work and, with the help of the 'reticulate' packge (CITE),
+    However, the Python version, the 'colour' package 
+    (<a href="#mansencal_thomas_2017_821825">Mansencal et al., 2017</a>),
+    does work and, with the help of the R package 'reticulate' 
+    (<a href="#reticulate-pkg">Allaire et al., 2017</a>),
     can be run easily from R.
   </p>
     <p>
-    The function we need from the Python 'Colour' package
+    The function we need from the Python 'colour' package
     is called <code>xyY_to_munsell_colour</code> which, as the 
-    name suggests, requires colours in CIE xyY colour space (CITE),
+    name suggests, requires colours in CIE xyY colour space 
+    (<a href="#cie1931">Wikipedia, 2018a</a>),
     so we must first convert from sRGB to xyY.  This can be achieved
-    using functions from the 'colorscience' package (CITE) and
-    notice that we must also perform chromatic adaptation from the
+    using functions from the 'colorscience' package 
+    (<a href="#colorscience-pkg">Gama, 2017</a>),
+    as shown below 
+    (notice that we must also perform chromatic adaptation from the
     D65 illuminant that is defined for sRGB to the C illuminant 
-    Munsell colours.
+    that is used for    Munsell colours).
   </p>
-<div class="chunk" id="unnamed-chunk-16"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(colorscience)</span>
+<div class="chunk" id="unnamed-chunk-17"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(colorscience)</span>
 <span class="hl std">xyYcolours</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">XYZ2xyY</span><span class="hl std">(</span><span class="hl kwd">RGB2XYZ</span><span class="hl std">(colours,</span> <span class="hl kwc">illuminant</span><span class="hl std">=</span><span class="hl str">&quot;C&quot;</span><span class="hl std">))</span>
 </pre></div>
 </div></div>
     <p>
     With this approach, different sRGB colours are converted to 
-    different Munsell colours and the loss of resolution 
+    different Munsell colours;  the improvement in resolution
+    of the Munsell colours
     compared to the nearest-match approach is very clear,
     particularly in terms of hue.
   </p>
-<div class="chunk" id="unnamed-chunk-17"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(reticulate)</span>
+<div class="chunk" id="unnamed-chunk-18"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(reticulate)</span>
 <span class="hl std">colour</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">import</span><span class="hl std">(</span><span class="hl str">&quot;colour&quot;</span><span class="hl std">)</span>
 <span class="hl kwd">apply</span><span class="hl std">(xyYcolours,</span> <span class="hl num">1</span><span class="hl std">, colour</span><span class="hl opt">$</span><span class="hl std">xyY_to_munsell_colour)</span>
 </pre></div>
@@ -511,7 +586,7 @@ Wednesday 31 January 2018
     <code>ColorBlockFromMunsell</code> from the
     'colorscience' package.
   </p>
-<div class="chunk" id="unnamed-chunk-18"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">munsellColours</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">apply</span><span class="hl std">(xyYcolours,</span> <span class="hl num">1</span><span class="hl std">, colour</span><span class="hl opt">$</span><span class="hl std">xyY_to_munsell_colour)</span>
+<div class="chunk" id="unnamed-chunk-19"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">munsellColours</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">apply</span><span class="hl std">(xyYcolours,</span> <span class="hl num">1</span><span class="hl std">, colour</span><span class="hl opt">$</span><span class="hl std">xyY_to_munsell_colour)</span>
 <span class="hl kwd">ColorBlockFromMunsell</span><span class="hl std">(</span><span class="hl kwd">MunsellSpecToHVC</span><span class="hl std">(munsellColours))</span>
 </pre></div>
 <div class="output"><pre class="knitr r">                HVC.H HVC.V HVC.C Number      Name
@@ -521,54 +596,18 @@ Wednesday 31 January 2018
 </pre></div>
 </div></div>
     <p>
-    Although this solution appears to produce a good result, there
-    are still some issues.  The <code>xyY_to_munsell_colour</code>
-    function performs an iterative search to find a Munsell colour and 
-    this is both relatively slow and not guaranteed to succeed.
-    For example, the conversion does not work for very dark colours ...
-  </p>
-<div class="chunk" id="unnamed-chunk-19"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">colour</span><span class="hl opt">$</span><span class="hl kwd">xyY_to_munsell_colour</span><span class="hl std">(</span><span class="hl kwd">XYZ2xyY</span><span class="hl std">(</span><span class="hl kwd">RGB2XYZ</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">0</span><span class="hl std">,</span> <span class="hl num">0</span><span class="hl std">,</span> <span class="hl num">0</span><span class="hl std">),</span> <span class="hl kwc">illuminant</span><span class="hl std">=</span><span class="hl str">&quot;C&quot;</span><span class="hl std">)))</span>
-</pre></div>
-<div class="error"><pre class="knitr r">  Error in py_call_impl(callable, dots$args, dots$keywords): AssertionError: &quot;0.0&quot; value must be in domain [1, 10]!
-  
-  Detailed traceback: 
-    File &quot;/home/paul/.local/lib/python2.7/site-packages/colour/notation/munsell.py&quot;, line 899, in xyY_to_munsell_colour
-      specification = xyY_to_munsell_specification(xyY)
-    File &quot;/home/paul/.local/lib/python2.7/site-packages/colour/notation/munsell.py&quot;, line 722, in xyY_to_munsell_specification
-      hue_current, value, code_current)
-    File &quot;/home/paul/.local/lib/python2.7/site-packages/colour/notation/munsell.py&quot;, line 1879, in maximum_chroma_from_renotation
-      '&quot;{0}&quot; value must be in domain [1, 10]!'.format(value))
-</pre></div>
-</div></div>
-    <p>
-    ... and in other cases the iterations do not converge on a solution ...
-  </p>
-<div class="chunk" id="unnamed-chunk-20"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">colour</span><span class="hl opt">$</span><span class="hl kwd">xyY_to_munsell_colour</span><span class="hl std">(</span><span class="hl kwd">XYZ2xyY</span><span class="hl std">(</span><span class="hl kwd">RGB2XYZ</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl std">,</span> <span class="hl num">1</span><span class="hl std">,</span> <span class="hl num">1</span><span class="hl std">),</span> <span class="hl kwc">illuminant</span><span class="hl std">=</span><span class="hl str">&quot;C&quot;</span><span class="hl std">)))</span>
-</pre></div>
-<div class="error"><pre class="knitr r">  Error in py_call_impl(callable, dots$args, dots$keywords): ValueError: &quot;[[ 0.31006051  0.31614955  1.        ]]&quot; is not within &quot;MacAdam&quot; limits for illuminant &quot;C&quot;!
-  
-  Detailed traceback: 
-    File &quot;/home/paul/.local/lib/python2.7/site-packages/colour/notation/munsell.py&quot;, line 899, in xyY_to_munsell_colour
-      specification = xyY_to_munsell_specification(xyY)
-    File &quot;/home/paul/.local/lib/python2.7/site-packages/colour/notation/munsell.py&quot;, line 676, in xyY_to_munsell_specification
-      '&quot;{1}&quot;!').format(xyY, MUNSELL_DEFAULT_ILLUMINANT))
-</pre></div>
-</div></div>
-    <p>
-    The dependence on 'reticulate', to gain access to the Python 
-    package 'Colour', is a practical obstacle because it means that 
+    Unfortunately, the dependence on 'reticulate', to gain access to the Python 
+    package 'colour', is a practical obstacle because it means that 
     installation of the 'rolocISCCNBS' package requires the user to
-    install Python (and the Python package 'Colour') on their system.
-  </p>
-    <p>
+    install Python (and the Python package 'colour') on their system.
     However, we can avoid having
     'rolocISCCNBS' depend upon 'reticulate' (and Python)
     if we <em>pre-calculate</em>
     all sRGB to Munsell (to ISCC-NBS colour block) conversions.
-    Pre-calculating these conversions is possible because there are
-    only a finite (if large) set of possible sRGB specifications in R.
   </p>
     <p>
+    Pre-calculating these conversions is possible because there are
+    only a finite (if large) set of possible sRGB specifications in R.
     R stores colours using 8 bits each for red, green, and blue 
     components (24-bit colour).  This means that there are 
     16,777,216 (2 to the power of 24) possible colour specifications in R.
@@ -580,15 +619,17 @@ Wednesday 31 January 2018
     <p>
     This means that the conversion from sRGB to ISCC-NBS colour name 
     is just a table look up using the integer red, green, and blue
-    components of the colour specification as an index into the
-    character vector of ISCC-NBS colour names.
+    components of the sRGB colour specification as an index into the
+    character vector of ISCC-NBS colour names
+    (red + green*256 + blue*256*256 + 1).
   </p>
     <p>
     This does mean that the 'rolocISCCNBS' package contains an R object
     approximately 2.7 MB in size (which takes a few seconds to load
     the first time that the <code>ISCCNBSblock</code> function is called), 
     but it removes the need for a
-    dependence on the 'reticulate' package (and Python).
+    dependence on the 'reticulate' package (and Python) and
+    all conversions after the first one are instantaneous.
   </p>
     <h2>
       <a name="examples">6. Examples</a>
@@ -598,40 +639,117 @@ Wednesday 31 January 2018
     one of the colour scales that different R packages produce.
     The following example shows that the ISCC-NBS colour list and
     colour metric perform quite well on a relatively complex
-    colour scale produced by the 'pals' package (CITE).
-    Note the use of options to set the default colour list and colour
-    metric for the 'roloc' package.
+    colour scale produced by the 'pals' package 
+    (<a href="#pals-pkg">Wright, 2017</a>).
   </p>
-<div class="chunk" id="unnamed-chunk-21"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">options</span><span class="hl std">(</span><span class="hl kwc">roloc.colourList</span><span class="hl std">=ISCCNBScolours,</span>
+<div class="chunk" id="unnamed-chunk-20"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">options</span><span class="hl std">(</span><span class="hl kwc">roloc.colourList</span><span class="hl std">=ISCCNBScolours,</span>
     <span class="hl kwc">roloc.colourMetric</span><span class="hl std">=ISCCNBSblock)</span>
 <span class="hl kwd">library</span><span class="hl std">(pals)</span>
 <span class="hl kwd">colourSwatch</span><span class="hl std">(</span><span class="hl kwd">stepped</span><span class="hl std">())</span>
 </pre></div>
-</div><div class="rimage default"><img src="figure/unnamed-chunk-21-1.png" title="plot of chunk unnamed-chunk-21" alt="plot of chunk unnamed-chunk-21" class="plot" /></div></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-20-1.png" title="plot of chunk unnamed-chunk-20" alt="plot of chunk unnamed-chunk-20" class="plot" /></div></div>
     <h2>
       <a name="summary">7. Discussion</a>
     </h2>
     <p>
-    The conversion will have holes because, although ISCC-NBS covers
-    all of Munsell, the sRGB-to-Munsell conversion does not always work.
-    
-    NOTE that the swatch produced for an ISCC-NBS colour block 
-    ONLY represents the block centroid;  a block encompasses many
-    different colours.
+    The purpose of the 'rolocISCCNBS' package is to support
+    conversions from R colour specifications to colour names
+    using the ISCC-NBS System of Colour Designation.  This works
+    reasonably well, although the package is relatively large
+    because of a character vector of 
+    pre-calculated sRGB-to-ISCC-NBS-block conversions and,
+    for the same reason, the first conversion is relatively slow.
+  </p>
+    <p>
+    One weakness in the conversion is the fact that the 
+    sRGB-to-ISCC-NBS-block conversions are not always successful
+    (because the conversions make use of the <code>xyY_to_munsell_colour</code>
+    function from the Python package 'colour' and that function
+    does not always succeed).
+    For example, the conversion does not work for very dark colours ...
+  </p>
+<div class="chunk" id="unnamed-chunk-21"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">colour</span><span class="hl opt">$</span><span class="hl kwd">xyY_to_munsell_colour</span><span class="hl std">(</span><span class="hl kwd">XYZ2xyY</span><span class="hl std">(</span><span class="hl kwd">RGB2XYZ</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">0</span><span class="hl std">,</span> <span class="hl num">0.1</span><span class="hl std">,</span> <span class="hl num">0.1</span><span class="hl std">),</span> <span class="hl kwc">illuminant</span><span class="hl std">=</span><span class="hl str">&quot;C&quot;</span><span class="hl std">)))</span>
+</pre></div>
+</div></div>
+<div class="chunk" id="unnamed-chunk-22"><div class="rcode"><div class="output"><pre class="knitr r">  AssertionError: &quot;0.69020652865&quot; value must be in domain [1, 10]!
+</pre></div>
+</div></div>
+    <p>
+    ... in other cases the iterative search within 
+    <code>xyY_to_munsell_colour</code>    does not converge on a solution ...
+  </p>
+<div class="chunk" id="unnamed-chunk-23"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">colour</span><span class="hl opt">$</span><span class="hl kwd">xyY_to_munsell_colour</span><span class="hl std">(</span><span class="hl kwd">XYZ2xyY</span><span class="hl std">(</span><span class="hl kwd">RGB2XYZ</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl std">,</span> <span class="hl num">1</span><span class="hl std">,</span> <span class="hl num">0</span><span class="hl std">),</span> <span class="hl kwc">illuminant</span><span class="hl std">=</span><span class="hl str">&quot;C&quot;</span><span class="hl std">)))</span>
+</pre></div>
+</div></div>
+<div class="chunk" id="unnamed-chunk-24"><div class="rcode"><div class="output"><pre class="knitr r">  RuntimeError: Maximum inner iterations count reached without convergence!
+</pre></div>
+</div></div>
+    <!--
+  <p>
+    ... in other cases the colours are not "within range" of the algorithm ...
+  </p>
+  <rcode><![CDATA[
+colour$xyY_to_munsell_colour(XYZ2xyY(RGB2XYZ(c(0,.1,.5), illuminant="C")))
+  ]]></rcode>
+  -->
+    <p>
+    ... and there are some sRGB colours that are outside the MacAdam limits 
+    (for illuminant C; <a href="#macadam-wiki">Wikipedia, 2018c</a>)  ...
+  </p>
+<div class="chunk" id="unnamed-chunk-25"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">colour</span><span class="hl opt">$</span><span class="hl kwd">xyY_to_munsell_colour</span><span class="hl std">(</span><span class="hl kwd">XYZ2xyY</span><span class="hl std">(</span><span class="hl kwd">RGB2XYZ</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">0</span><span class="hl std">,</span> <span class="hl num">0</span><span class="hl std">,</span> <span class="hl num">1</span><span class="hl std">),</span> <span class="hl kwc">illuminant</span><span class="hl std">=</span><span class="hl str">&quot;C&quot;</span><span class="hl std">)))</span>
+</pre></div>
+</div></div>
+<div class="chunk" id="unnamed-chunk-26"><div class="rcode"><div class="output"><pre class="knitr r">  ValueError: &quot;[[ 0.14915498  0.05849607  0.07642525]]&quot; is not within &quot;MacAdam&quot; limits for illuminant &quot;C&quot;!
+</pre></div>
+</div></div>
+    <p>
+    In these cases, the <code>ISCCNBSblock</code> colour metric
+    will produce an <code>NA</code>
+    value (as we saw in the Section <a href="#ISCCNBSblock">An ISCC-NBS colour metric</a>), which
+    may in turn result in either <code>"unknown"</code> or, in extreme
+    cases, <code>NA</code> as the colour name.
+  </p>
+    <p>
+    A possible resolution for 
+    the MacAdam limit problem is to clamp invalid sRGB values to the
+    nearest Munsell colour (though this is not currently supported by the
+    <code>xyY_to_munsell_colour</code> function).
+    A possible solution for the dark colour problem
+    and for situations where <code>xyY_to_munsell_colour</code>
+    does not converge could be to use a different sRGB-to-Munsell conversion.
+    These include the more approximate conversions provided by the
+    'munsell' and 'aqp' packages, plus there are other published
+    algorithms without (public/open) software implementations
+    (<a href="#D1535">ASTM, 2014</a>, <a href="#COL:COL5080120506">Simon and Frost, 1987</a>)
   </p>
     <h2>
       <a name="summary">8. Summary</a>
     </h2>
     <p>
+    The 'rolocISCCNBS' package provides a colour list and a colour metric
+    for the 'roloc' package that allows colour specifications to 
+    be converted into colour names that are based on the ISCC-NBS 
+    System of Colour Designation.  The colour list is provided as the
+    R object 'ISCCNBScolours' and the colour metric is provided
+    as the function 'ISCCNBSblock';  the former can be specified
+    in the 'colourList' argument in calls to the <code>colourName</code>
+    function from the 'roloc' package,
+    and the latter can be specified in the 'colourMetric'
+    argument to that function.
   </p>
     <h2>
       <a name="requirements">9. Technical requirements</a>
     </h2>
     <p>
-    The examples and discussion in this document relate to <a href="https://github.com/pmur002/roloc/releases/tag/v0.1">version
-    0.1</a> of the 'roloc' package; version 0.27 of the 
-    <a href="https://github.com/ajrgrodfrey/BrailleR/">BrailleR</a>
-    package.
+    The examples and discussion in this document relate to 
+    <a href="https://github.com/pmur002/rolocISCCNBS/releases/tag/v0.1">version
+    0.1</a> of the 'rolocISCCNBS' package,
+    <a href="https://github.com/pmur002/roloc/releases/tag/v0.1">version
+    0.1</a> of the 'roloc' package, and 
+    <a href="https://github.com/pmur002/colorscience/releases/tag/v1.0.5">version
+    1.0.5</a> of the 'colorscience' package (which is a fork of the
+    <a href="https://r-forge.r-project.org/R/?group_id=1926">original 'colorscience' package</a> to include a bug fix for <code>XYZ2xyY</code> and 
+    a vectorised version of <code>ColorBlockFromMunsell</code>).
   </p>
     <p>
     This report was generated within a Docker container
@@ -675,13 +793,15 @@ Wednesday 31 January 2018
     </ul>
     <h2>Acknowledgements</h2>
     <p>
+    The author would like to thank 
     Ken Knoblauch, Graham Finlayson, and Philip Green for expert pointers and
-    advice on colour, particularly for conversions to and from Munsell.
+    advice on colour, particularly for conversions to and from the Munsell
+    colour system.
   </p>
     <h2>How to cite this document</h2>
     <p>
     Murrell, P. (2018). "An ISCC-NBS Colour List for 'roloc'" 
-    Technical Report 2018-??, University of Auckland. 
+    Technical Report 2018-02, University of Auckland. 
     [ <a href="how-to-cite.bib">bib</a> ] 
   </p>
     <h2>
@@ -689,13 +809,354 @@ Wednesday 31 January 2018
     </h2>
     <dl>
 <dt>
-[<a name="roloc-pkg">Murrell, 2017</a>]
+[<a name="reticulate-pkg">Allaire et al., 2017</a>]
 </dt>
 <dd>
-Murrell, P. (2017).
+Allaire, J., Tang, Y., and Geelnard, M. (2017).
+ <em>reticulate: R Interface to Python</em>.
+ R package version 1.2.
+[ <a href="roloc-nbs-bib_bib.html#reticulate-pkg">bib</a> | 
+<a href="https://CRAN.R-project.org/package=reticulate">http</a> ]
+
+</dd>
+
+
+<dt>
+[<a name="D1535">ASTM, 2014</a>]
+</dt>
+<dd>
+ASTM (2014).
+ D1535-14, standard practice for specifying color by the Munsell
+  system.
+ <a href="www.astm.org">www.astm.org</a>.
+[ <a href="roloc-nbs-bib_bib.html#D1535">bib</a> ]
+
+</dd>
+
+
+<dt>
+[<a name="aqp-pkg">Beaudette et al., 2013</a>]
+</dt>
+<dd>
+Beaudette, D., Roudier, P., and O'Geen, A. (2013).
+ <em>Algorithms for Quantitative Pedology: A Toolkit for Soil
+  Scientists</em>.
+[ <a href="roloc-nbs-bib_bib.html#aqp-pkg">bib</a> | 
+<a href="%5Curl%7Bhttp://r-forge.r-project.org/projects/aqp/%7D">www:</a> ]
+
+</dd>
+
+
+<dt>
+[<a name="COL:COL20715">Centore, 2012</a>]
+</dt>
+<dd>
+Centore, P. (2012).
+ An open-source inversion algorithm for the munsell renotation.
+ <em>Color Research &amp; Application</em>, 37(6):455--464.
+[ <a href="roloc-nbs-bib_bib.html#COL:COL20715">bib</a> | 
+<a href="http://dx.doi.org/10.1002/col.20715">DOI</a> | 
+<a href="http://dx.doi.org/10.1002/col.20715">http</a> ]
+
+</dd>
+
+
+<dt>
+[<a name="colorscience-pkg">Gama, 2017</a>]
+</dt>
+<dd>
+Gama, J. (2017).
+ <em>colorscience: Color Science Methods and Data</em>.
+ R package version 1.0.5.
+[ <a href="roloc-nbs-bib_bib.html#colorscience-pkg">bib</a> | 
+<a href="https://CRAN.R-project.org/package=colorscience">http</a> ]
+
+</dd>
+
+
+<dt>
+[<a name="munsellinterpol-pkg">Gama and Centore, 2015</a>]
+</dt>
+<dd>
+Gama, J. and Centore, P. (2015).
+ <em>munsellinterpol: Interpolate Munsell Renotation Data from
+  Hue/Chroma to CIE/sRGB</em>.
+ R package version 1.0.2.
+[ <a href="roloc-nbs-bib_bib.html#munsellinterpol-pkg">bib</a> | 
+<a href="https://CRAN.R-project.org/package=munsellinterpol">http</a> ]
+
+</dd>
+
+
+<dt>
+[<a name="colorspace-pkg">Ihaka et al., 2016</a>]
+</dt>
+<dd>
+Ihaka, R., Murrell, P., Hornik, K., Fisher, J. C., and Zeileis, A. (2016).
+ <em>colorspace: Color Space Manipulation</em>.
+ R package version 1.3-2.
+[ <a href="roloc-nbs-bib_bib.html#colorspace-pkg">bib</a> | 
+<a href="https://CRAN.R-project.org/package=colorspace">http</a> ]
+
+</dd>
+
+
+<dt>
+[<a name="isccnbs1939">Judd and Kelly, 1939</a>]
+</dt>
+<dd>
+Judd, D. B. and Kelly, K. L. (1939).
+ Method of designating colors and a dictionary.
+ <em>Journal of Research of the National Bureau of Standards</em>,
+  23:355.
+[ <a href="roloc-nbs-bib_bib.html#isccnbs1939">bib</a> ]
+
+</dd>
+
+
+<dt>
+[<a name="isccnbs1955">Kelly and Judd, 1955</a>]
+</dt>
+<dd>
+Kelly, K. L. and Judd, D. B. (1955).
+ The iscc–nbs method of designating colors and a dictionary of color
+  names.
+[ <a href="roloc-nbs-bib_bib.html#isccnbs1955">bib</a> ]
+
+</dd>
+
+
+<dt>
+[<a name="mansencal_thomas_2017_821825">Mansencal et al., 2017</a>]
+</dt>
+<dd>
+Mansencal, T., Mauderer, M., Parsons, M., Canavan, L., Cooper, S., Shaw, N.,
+  Wheatley, K., and Crowson, K. (2017).
+ Colour 0.3.10.
+[ <a href="roloc-nbs-bib_bib.html#mansencal_thomas_2017_821825">bib</a> | 
+<a href="http://dx.doi.org/10.5281/zenodo.821825">DOI</a> | 
+<a href="https://doi.org/10.5281/zenodo.821825">http</a> ]
+
+</dd>
+
+
+<dt>
+[<a name="murrell-roloc">Murrell, 2018a</a>]
+</dt>
+<dd>
+Murrell, P. (2018a).
+ Generating colour names: The 'roloc' package for R.
+ Technical Report 2018-01, Department of Statistics, The University of
+  Auckland.
+[ <a href="roloc-nbs-bib_bib.html#murrell-roloc">bib</a> ]
+
+</dd>
+
+
+<dt>
+[<a name="roloc-pkg">Murrell, 2018b</a>]
+</dt>
+<dd>
+Murrell, P. (2018b).
  <em>roloc: Convert colour specification to colour name</em>.
  R package version 0.1.
 [ <a href="roloc-nbs-bib_bib.html#roloc-pkg">bib</a> ]
+
+</dd>
+
+
+<dt>
+[<a name="isccnbs-centroids">Nickerson and Newhall, 1941</a>]
+</dt>
+<dd>
+Nickerson, D. and Newhall, S. (1941).
+ Central notations for iscc–nbs color names.
+ <em>Journal of the Optical Society of America</em>, 31:587.
+[ <a href="roloc-nbs-bib_bib.html#isccnbs-centroids">bib</a> ]
+
+</dd>
+
+
+<dt>
+[<a name="R">R Core Team, 2017</a>]
+</dt>
+<dd>
+R Core Team (2017).
+ <em>R: A Language and Environment for Statistical Computing</em>.
+ R Foundation for Statistical Computing, Vienna, Austria.
+[ <a href="roloc-nbs-bib_bib.html#R">bib</a> | 
+<a href="https://www.R-project.org/">http</a> ]
+
+</dd>
+
+
+<dt>
+[<a name="munsell-renotation">Rochester Institute of Technology, 2018</a>]
+</dt>
+<dd>
+Rochester Institute of Technology (2018).
+ Munsell renotation data.
+ <a href="https://www.rit.edu/cos/colorscience/rc_munsell_renotation.php">https://www.rit.edu/cos/colorscience/rc_munsell_renotation.php</a>.
+ Accessed: 2018-02-07.
+[ <a href="roloc-nbs-bib_bib.html#munsell-renotation">bib</a> ]
+
+</dd>
+
+
+<dt>
+[<a name="COL:COL5080120506">Simon and Frost, 1987</a>]
+</dt>
+<dd>
+Simon, F. T. and Frost, J. A. (1987).
+ A new method for the conversion of CIE colorimetric data to munsell
+  notations.
+ <em>Color Research &amp; Application</em>, 12(5):256--260.
+[ <a href="roloc-nbs-bib_bib.html#COL:COL5080120506">bib</a> | 
+<a href="http://dx.doi.org/10.1002/col.5080120506">DOI</a> | 
+<a href="http://dx.doi.org/10.1002/col.5080120506">http</a> ]
+
+</dd>
+
+
+<dt>
+[<a name="isccnbs-tx4">Texas Precancel Club, 2018</a>]
+</dt>
+<dd>
+Texas Precancel Club (2018).
+ NBS/ISCC color system.
+ <a href="http://tx4.us/nbs-iscc.htm">http://tx4.us/nbs-iscc.htm</a>.
+ Accessed: 2018-02-07.
+[ <a href="roloc-nbs-bib_bib.html#isccnbs-tx4">bib</a> ]
+
+</dd>
+
+
+<dt>
+[<a name="munsell-pkg">Wickham, 2016</a>]
+</dt>
+<dd>
+Wickham, C. (2016).
+ <em>munsell: Utilities for Using Munsell Colours</em>.
+ R package version 0.4.3.
+[ <a href="roloc-nbs-bib_bib.html#munsell-pkg">bib</a> | 
+<a href="%5Curl%7Bhttps://CRAN.R-project.org/package=munsell%7D">www:</a> ]
+
+</dd>
+
+
+<dt>
+[<a name="cie1931">Wikipedia, 2018a</a>]
+</dt>
+<dd>
+Wikipedia (2018a).
+ CIE 1931 color space.
+ <a href="https://en.wikipedia.org/wiki/CIE_1931_color_space">https://en.wikipedia.org/wiki/CIE_1931_color_space</a>.
+ Accessed: 2018-02-07.
+[ <a href="roloc-nbs-bib_bib.html#cie1931">bib</a> ]
+
+</dd>
+
+
+<dt>
+[<a name="cieluv">Wikipedia, 2018b</a>]
+</dt>
+<dd>
+Wikipedia (2018b).
+ CIELUV Color Space.
+ <a href="http://en.wikipedia.org/wiki/CIELUV_color_space">http://en.wikipedia.org/wiki/CIELUV_color_space</a>.
+ Accessed: 2018-02-07.
+[ <a href="roloc-nbs-bib_bib.html#cieluv">bib</a> ]
+
+</dd>
+
+
+<dt>
+[<a name="macadam-wiki">Wikipedia, 2018c</a>]
+</dt>
+<dd>
+Wikipedia (2018c).
+ Gamut.
+ <a href="http://en.wikipedia.org/wiki/Gamut">http://en.wikipedia.org/wiki/Gamut</a>.
+ Accessed: 2018-02-07.
+[ <a href="roloc-nbs-bib_bib.html#macadam-wiki">bib</a> ]
+
+</dd>
+
+
+<dt>
+[<a name="isccnbs-wiki">Wikipedia, 2018d</a>]
+</dt>
+<dd>
+Wikipedia (2018d).
+ ISCC–NBS system.
+ <a href="https://en.wikipedia.org/wiki/ISCC---NBS_system">https://en.wikipedia.org/wiki/ISCC---NBS_system</a>.
+ Accessed: 2018-02-07.
+[ <a href="roloc-nbs-bib_bib.html#isccnbs-wiki">bib</a> ]
+
+</dd>
+
+
+<dt>
+[<a name="cielab">Wikipedia, 2018e</a>]
+</dt>
+<dd>
+Wikipedia (2018e).
+ Lab color space.
+ <a href="http://en.wikipedia.org/wiki/Lab_color_space">http://en.wikipedia.org/wiki/Lab_color_space</a>.
+ Accessed: 2018-02-07.
+[ <a href="roloc-nbs-bib_bib.html#cielab">bib</a> ]
+
+</dd>
+
+
+<dt>
+[<a name="munsell-wiki">Wikipedia, 2018f</a>]
+</dt>
+<dd>
+Wikipedia (2018f).
+ Munsell color system.
+ <a href="http://en.wikipedia.org/wiki/Munsell_color_system">http://en.wikipedia.org/wiki/Munsell_color_system</a>.
+ Accessed: 2018-02-07.
+[ <a href="roloc-nbs-bib_bib.html#munsell-wiki">bib</a> ]
+
+</dd>
+
+
+<dt>
+[<a name="srgb">Wikipedia, 2018g</a>]
+</dt>
+<dd>
+Wikipedia (2018g).
+ sRGB.
+ <a href="http://en.wikipedia.org/wiki/SRGB">http://en.wikipedia.org/wiki/SRGB</a>.
+ Accessed: 2018-02-07.
+[ <a href="roloc-nbs-bib_bib.html#srgb">bib</a> ]
+
+</dd>
+
+
+<dt>
+[<a name="pals-pkg">Wright, 2017</a>]
+</dt>
+<dd>
+Wright, K. (2017).
+ <em>pals: Color Palettes, Colormaps, and Tools to Evaluate Them</em>.
+ R package version 1.4.
+[ <a href="roloc-nbs-bib_bib.html#pals-pkg">bib</a> | 
+<a href="https://CRAN.R-project.org/package=pals">http</a> ]
+
+</dd>
+
+
+<dt>
+[<a name="colorspace">Zeileis et al., 2009</a>]
+</dt>
+<dd>
+Zeileis, A., Hornik, K., and Murrell, P. (2009).
+ Escaping RGBland: Selecting colors for statistical graphics.
+ <em>Computational Statistics &amp; Data Analysis</em>, 53(9):3259--3270.
+[ <a href="roloc-nbs-bib_bib.html#colorspace">bib</a> | 
+<a href="http://dx.doi.org/10.1016/j.csda.2008.11.033">DOI</a> ]
 
 </dd>
 </dl>
