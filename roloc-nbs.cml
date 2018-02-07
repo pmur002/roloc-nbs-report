@@ -88,7 +88,7 @@ options(width=100)
     for transforming
     inscrutable colour specifications into more recognisable colour names.
     The <code>colourName()</code> function in the 'roloc' package
-    can take an R hexadecimal string colour specification, like 
+    can take a hexadecimal string colour specification, like 
     <code>"#123456"</code>, and produce a matching colour name.
   </p>
   <rcode>
@@ -230,8 +230,8 @@ colourSwatch(match)
     If we use a euclidean metric with the ISCC-NBS colour block
     centroids to determine distances from colour specifications, 
     we ignore the colour block boundaries, and this can produce
-    some surprising results.  For example, the following code 
-    obtains colour names for a set of grey colour specifications and
+    some unsatisfactory results.  For example, the following code 
+    obtains colour names for a set of grey colour specifications, but
     the resulting names are not all neutral greys.
   </p>
   <rcode>
@@ -301,7 +301,7 @@ match
   <p>
     The result of this colour match is that, for two of the colour
     specifications the colour is unknown, but for the other colour
-    specifications there are two colour names that match.
+    specification there are two colour names that match.
   </p>
   <rcode fig.height="1">
 colourNames(match)
@@ -325,7 +325,7 @@ colourSwatches(match)
     The main problem is that the ISCC-NBS colour metric works in
     the ISCC-NBS colour space, which is defined in terms of regions 
     within Munsell colour space, but the 
-    <code>ISCCNBSblock</code> function is given both a set of colour
+    <code>ISCCNBSblock</code> function is given as inputs both a set of colour
     specifications and a colour list in terms of sRGB colour space.
     This means that 
     we need a conversion from sRGB colours to Munsell colours
@@ -455,7 +455,7 @@ ColorBlockFromMunsell(MunsellSpecToHVC(munsellColours))
     (red + green*256 + blue*256*256 + 1).
   </p>
   <p>
-    This does mean that the 'rolocISCCNBS' package contains an R object
+    This does also mean that the 'rolocISCCNBS' package contains an R object
     approximately 2.7 MB in size (which takes a few seconds to load
     the first time that the <code>ISCCNBSblock</code> function is called), 
     but it removes the need for a
@@ -576,8 +576,8 @@ cat(gsub("\n.+", "", attr(result, "condition")$message), "\n")
     0.1</a> of the 'rolocISCCNBS' package,
     <a href="https://github.com/pmur002/roloc/releases/tag/v0.1">version
     0.1</a> of the 'roloc' package, and 
-    <a href="https://github.com/pmur002/colorscience/releases/tag/v1.0.5">version
-    1.0.5</a> of the 'colorscience' package (which is a fork of the
+    <a href="https://github.com/pmur002/colorscience/releases/tag/v1.0.6">version
+    1.0.6</a> of the 'colorscience' package (which is a fork of the
     <a href="https://r-forge.r-project.org/R/?group_id=1926">original 'colorscience' package</a> to include a bug fix for <code>XYZ2xyY</code> and 
     a vectorised version of <code>ColorBlockFromMunsell</code>).
   </p>
@@ -632,7 +632,8 @@ cat(gsub("\n.+", "", attr(result, "condition")$message), "\n")
   <h2>How to cite this document</h2>
   <p>
     Murrell, P. (2018). "An ISCC-NBS Colour List for 'roloc'" 
-    Technical Report 2018-02, University of Auckland. 
+    Technical Report 2018-02, Department of Statistics, 
+    The University of Auckland. 
     [ <a href="how-to-cite.bib">bib</a> ] 
   </p>
 

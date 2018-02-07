@@ -97,7 +97,7 @@
     </p>
     <p class="date">
     Version 1:
-Tuesday 06 February 2018
+Wednesday 07 February 2018
   </p>
 
 
@@ -176,7 +176,7 @@ Tuesday 06 February 2018
     for transforming
     inscrutable colour specifications into more recognisable colour names.
     The <code>colourName()</code> function in the 'roloc' package
-    can take an R hexadecimal string colour specification, like 
+    can take a hexadecimal string colour specification, like 
     <code>"#123456"</code>, and produce a matching colour name.
   </p>
 <div class="chunk" id="unnamed-chunk-3"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(roloc)</span>
@@ -334,8 +334,8 @@ Tuesday 06 February 2018
     If we use a euclidean metric with the ISCC-NBS colour block
     centroids to determine distances from colour specifications, 
     we ignore the colour block boundaries, and this can produce
-    some surprising results.  For example, the following code 
-    obtains colour names for a set of grey colour specifications and
+    some unsatisfactory results.  For example, the following code 
+    obtains colour names for a set of grey colour specifications, but
     the resulting names are not all neutral greys.
   </p>
 <div class="chunk" id="unnamed-chunk-10"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">colourName</span><span class="hl std">(</span><span class="hl kwd">grey</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">4</span><span class="hl opt">/</span><span class="hl num">5</span><span class="hl std">),</span> <span class="hl kwc">colourList</span><span class="hl std">=ISCCNBScolours)</span>
@@ -448,7 +448,7 @@ Tuesday 06 February 2018
     <p>
     The result of this colour match is that, for two of the colour
     specifications the colour is unknown, but for the other colour
-    specifications there are two colour names that match.
+    specification there are two colour names that match.
   </p>
 <div class="chunk" id="unnamed-chunk-13"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">colourNames</span><span class="hl std">(match)</span>
 </pre></div>
@@ -483,7 +483,7 @@ Tuesday 06 February 2018
     The main problem is that the ISCC-NBS colour metric works in
     the ISCC-NBS colour space, which is defined in terms of regions 
     within Munsell colour space, but the 
-    <code>ISCCNBSblock</code> function is given both a set of colour
+    <code>ISCCNBSblock</code> function is given as inputs both a set of colour
     specifications and a colour list in terms of sRGB colour space.
     This means that 
     we need a conversion from sRGB colours to Munsell colours
@@ -576,7 +576,7 @@ Tuesday 06 February 2018
 <span class="hl std">colour</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">import</span><span class="hl std">(</span><span class="hl str">&quot;colour&quot;</span><span class="hl std">)</span>
 <span class="hl kwd">apply</span><span class="hl std">(xyYcolours,</span> <span class="hl num">1</span><span class="hl std">, colour</span><span class="hl opt">$</span><span class="hl std">xyY_to_munsell_colour)</span>
 </pre></div>
-<div class="error"><pre class="knitr r">  Error in py_get_attr_impl(x, name, silent): AttributeError: 'module' object has no attribute 'xyY_to_munsell_colour'
+<div class="output"><pre class="knitr r">  [1] &quot;3.0PB 1.9/4.2&quot; &quot;2.9PB 2.0/4.2&quot; &quot;2.9PB 2.1/4.1&quot;
 </pre></div>
 </div></div>
     <p>
@@ -587,12 +587,9 @@ Tuesday 06 February 2018
     'colorscience' package.
   </p>
 <div class="chunk" id="unnamed-chunk-19"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">munsellColours</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">apply</span><span class="hl std">(xyYcolours,</span> <span class="hl num">1</span><span class="hl std">, colour</span><span class="hl opt">$</span><span class="hl std">xyY_to_munsell_colour)</span>
+<span class="hl kwd">ColorBlockFromMunsell</span><span class="hl std">(</span><span class="hl kwd">MunsellSpecToHVC</span><span class="hl std">(munsellColours))</span>
 </pre></div>
-<div class="error"><pre class="knitr r">  Error in py_get_attr_impl(x, name, silent): AttributeError: 'module' object has no attribute 'xyY_to_munsell_colour'
-</pre></div>
-<div class="source"><pre class="knitr r"><span class="hl kwd">ColorBlockFromMunsell</span><span class="hl std">(</span><span class="hl kwd">MunsellSpecToHVC</span><span class="hl std">(munsellColours))</span>
-</pre></div>
-<div class="error"><pre class="knitr r">  Error in MunsellSpecToHVC(munsellColours): object 'munsellColours' not found
+<div class="output"><pre class="knitr r">  [1] &quot;dark blue&quot; &quot;dark blue&quot; &quot;dark blue&quot;
 </pre></div>
 </div></div>
     <p>
@@ -624,7 +621,7 @@ Tuesday 06 February 2018
     (red + green*256 + blue*256*256 + 1).
   </p>
     <p>
-    This does mean that the 'rolocISCCNBS' package contains an R object
+    This does also mean that the 'rolocISCCNBS' package contains an R object
     approximately 2.7 MB in size (which takes a few seconds to load
     the first time that the <code>ISCCNBSblock</code> function is called), 
     but it removes the need for a
@@ -645,14 +642,9 @@ Tuesday 06 February 2018
 <div class="chunk" id="unnamed-chunk-20"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">options</span><span class="hl std">(</span><span class="hl kwc">roloc.colourList</span><span class="hl std">=ISCCNBScolours,</span>
     <span class="hl kwc">roloc.colourMetric</span><span class="hl std">=ISCCNBSblock)</span>
 <span class="hl kwd">library</span><span class="hl std">(pals)</span>
+<span class="hl kwd">colourSwatch</span><span class="hl std">(</span><span class="hl kwd">stepped</span><span class="hl std">())</span>
 </pre></div>
-<div class="error"><pre class="knitr r">  Error in library(pals): there is no package called 'pals'
-</pre></div>
-<div class="source"><pre class="knitr r"><span class="hl kwd">colourSwatch</span><span class="hl std">(</span><span class="hl kwd">stepped</span><span class="hl std">())</span>
-</pre></div>
-<div class="error"><pre class="knitr r">  Error in stepped(): could not find function &quot;stepped&quot;
-</pre></div>
-</div></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-20-1.png" title="plot of chunk unnamed-chunk-20" alt="plot of chunk unnamed-chunk-20" class="plot" /></div></div>
     <h2>
       <a name="summary">7. Discussion</a>
     </h2>
@@ -676,7 +668,7 @@ Tuesday 06 February 2018
 <div class="chunk" id="unnamed-chunk-21"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">colour</span><span class="hl opt">$</span><span class="hl kwd">xyY_to_munsell_colour</span><span class="hl std">(</span><span class="hl kwd">XYZ2xyY</span><span class="hl std">(</span><span class="hl kwd">RGB2XYZ</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">0</span><span class="hl std">,</span> <span class="hl num">0.1</span><span class="hl std">,</span> <span class="hl num">0.1</span><span class="hl std">),</span> <span class="hl kwc">illuminant</span><span class="hl std">=</span><span class="hl str">&quot;C&quot;</span><span class="hl std">)))</span>
 </pre></div>
 </div></div>
-<div class="chunk" id="unnamed-chunk-22"><div class="rcode"><div class="output"><pre class="knitr r">  AttributeError: 'module' object has no attribute 'xyY_to_munsell_colour'
+<div class="chunk" id="unnamed-chunk-22"><div class="rcode"><div class="output"><pre class="knitr r">  AssertionError: &quot;0.69020652865&quot; value must be in domain [1, 10]!
 </pre></div>
 </div></div>
     <p>
@@ -686,7 +678,7 @@ Tuesday 06 February 2018
 <div class="chunk" id="unnamed-chunk-23"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">colour</span><span class="hl opt">$</span><span class="hl kwd">xyY_to_munsell_colour</span><span class="hl std">(</span><span class="hl kwd">XYZ2xyY</span><span class="hl std">(</span><span class="hl kwd">RGB2XYZ</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl std">,</span> <span class="hl num">1</span><span class="hl std">,</span> <span class="hl num">0</span><span class="hl std">),</span> <span class="hl kwc">illuminant</span><span class="hl std">=</span><span class="hl str">&quot;C&quot;</span><span class="hl std">)))</span>
 </pre></div>
 </div></div>
-<div class="chunk" id="unnamed-chunk-24"><div class="rcode"><div class="output"><pre class="knitr r">  AttributeError: 'module' object has no attribute 'xyY_to_munsell_colour'
+<div class="chunk" id="unnamed-chunk-24"><div class="rcode"><div class="output"><pre class="knitr r">  RuntimeError: Maximum inner iterations count reached without convergence!
 </pre></div>
 </div></div>
     <!--
@@ -704,7 +696,7 @@ colour$xyY_to_munsell_colour(XYZ2xyY(RGB2XYZ(c(0,.1,.5), illuminant="C")))
 <div class="chunk" id="unnamed-chunk-25"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">colour</span><span class="hl opt">$</span><span class="hl kwd">xyY_to_munsell_colour</span><span class="hl std">(</span><span class="hl kwd">XYZ2xyY</span><span class="hl std">(</span><span class="hl kwd">RGB2XYZ</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">0</span><span class="hl std">,</span> <span class="hl num">0</span><span class="hl std">,</span> <span class="hl num">1</span><span class="hl std">),</span> <span class="hl kwc">illuminant</span><span class="hl std">=</span><span class="hl str">&quot;C&quot;</span><span class="hl std">)))</span>
 </pre></div>
 </div></div>
-<div class="chunk" id="unnamed-chunk-26"><div class="rcode"><div class="output"><pre class="knitr r">  AttributeError: 'module' object has no attribute 'xyY_to_munsell_colour'
+<div class="chunk" id="unnamed-chunk-26"><div class="rcode"><div class="output"><pre class="knitr r">  ValueError: &quot;[[0.14915498 0.05849607 0.07642525]]&quot; is not within &quot;MacAdam&quot; limits for illuminant &quot;C&quot;!
 </pre></div>
 </div></div>
     <p>
@@ -751,8 +743,8 @@ colour$xyY_to_munsell_colour(XYZ2xyY(RGB2XYZ(c(0,.1,.5), illuminant="C")))
     0.1</a> of the 'rolocISCCNBS' package,
     <a href="https://github.com/pmur002/roloc/releases/tag/v0.1">version
     0.1</a> of the 'roloc' package, and 
-    <a href="https://github.com/pmur002/colorscience/releases/tag/v1.0.5">version
-    1.0.5</a> of the 'colorscience' package (which is a fork of the
+    <a href="https://github.com/pmur002/colorscience/releases/tag/v1.0.6">version
+    1.0.6</a> of the 'colorscience' package (which is a fork of the
     <a href="https://r-forge.r-project.org/R/?group_id=1926">original 'colorscience' package</a> to include a bug fix for <code>XYZ2xyY</code> and 
     a vectorised version of <code>ColorBlockFromMunsell</code>).
   </p>
@@ -804,7 +796,8 @@ colour$xyY_to_munsell_colour(XYZ2xyY(RGB2XYZ(c(0,.1,.5), illuminant="C")))
     <h2>How to cite this document</h2>
     <p>
     Murrell, P. (2018). "An ISCC-NBS Colour List for 'roloc'" 
-    Technical Report 2018-02, University of Auckland. 
+    Technical Report 2018-02, Department of Statistics, 
+    The University of Auckland. 
     [ <a href="how-to-cite.bib">bib</a> ] 
   </p>
     <h2>
@@ -922,8 +915,8 @@ Judd, D. B. and Kelly, K. L. (1939).
 </dt>
 <dd>
 Kelly, K. L. and Judd, D. B. (1955).
- The ISCC--NBS method of designating colors and a dictionary of
-  color names.
+ The ISCC-NBS method of designating colors and a dictionary of color
+  names.
 [ <a href="roloc-nbs-bib_bib.html#isccnbs1955">bib</a> ]
 
 </dd>
@@ -973,22 +966,9 @@ Murrell, P. (2018b).
 </dt>
 <dd>
 Nickerson, D. and Newhall, S. (1941).
- Central notations for ISCC--NBS color names.
+ Central notations for ISCC-NBS color names.
  <em>Journal of the Optical Society of America</em>, 31:587.
 [ <a href="roloc-nbs-bib_bib.html#isccnbs-centroids">bib</a> ]
-
-</dd>
-
-
-<dt>
-[<a name="R">R Core Team, 2017</a>]
-</dt>
-<dd>
-R Core Team (2017).
- <em>R: A Language and Environment for Statistical Computing</em>.
- R Foundation for Statistical Computing, Vienna, Austria.
-[ <a href="roloc-nbs-bib_bib.html#R">bib</a> | 
-<a href="https://www.R-project.org/">http</a> ]
 
 </dd>
 
@@ -1091,8 +1071,8 @@ Wikipedia (2018c).
 </dt>
 <dd>
 Wikipedia (2018d).
- ISCC--NBS system.
- <a href="https://en.wikipedia.org/wiki/ISCC---NBS_system">https://en.wikipedia.org/wiki/ISCC---NBS_system</a>.
+ ISCC-NBS system.
+ <a href="https://en.wikipedia.org/wiki/ISCC-NBS_system">https://en.wikipedia.org/wiki/ISCC-NBS_system</a>.
  Accessed: 2018-02-07.
 [ <a href="roloc-nbs-bib_bib.html#isccnbs-wiki">bib</a> ]
 

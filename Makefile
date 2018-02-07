@@ -20,7 +20,7 @@ docker:
 
 web:
 	make docker
-	cp -r ../roloc-nbs ~/Web/Reports/roloc/NBS
+	cp -r ../roloc-nbs/* ~/Web/Reports/roloc/NBS/
 
 zip:
 	make docker

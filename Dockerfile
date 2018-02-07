@@ -39,9 +39,14 @@ RUN apt-get update && apt-get install -y \
 RUN pip install numpy
 RUN pip install scipy
 RUN pip install six
-RUN pip install colour
+RUN apt-get update && apt-get install -y wget
+RUN wget https://github.com/colour-science/colour/archive/v0.3.10.zip
+RUN pip install --no-index --find-links=./ v0.3.10.zip
 RUN Rscript -e 'library(devtools); install_version("reticulate", "1.2", repos="https://cran.rstudio.com/")'
+# Easy way to get 'rgl' (required dependency for 'pals')
+RUN apt-get install -y r-cran-rgl 
 RUN Rscript -e 'library(devtools); install_version("pals", "1.4", repos="https://cran.rstudio.com/")'
+RUN Rscript -e 'library(devtools); install_github("pmur002/colorscience@v1.0.6", force=TRUE)'
 
 # Set locale
 RUN apt-get install -y locales && locale-gen en_US.UTF-8
